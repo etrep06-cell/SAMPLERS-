@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commercial Law & Taxation MCQ Exam</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            max-width: 900px;
+            margin: auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        h1, h2 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 10px;
+        }
+        h2 {
+            margin-top: 0;
+            font-weight: 400;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .question-block {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        .options-container label {
+            display: block;
+            margin-bottom: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .options-container label:hover {
+            background-color: #f0f8ff;
+        }
+        .options-container input[type="radio"] {
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        #submit-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #fff;
+            background-color: #3498db;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        #submit-btn:hover {
+            background-color: #2980b9;
+        }
+        .explanation {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            background-color: #e9f5ff;
+            border-left: 5px solid #3498db;
+            font-size: 0.95em;
+        }
+        .result-indicator {
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .correct-answer {
+            background-color: #e8f9e8 !important;
+            border-color: #5cb85c !important;
+        }
+        .incorrect-answer {
+            background-color: #fdeeee !important;
+            border-color: #d9534f !important;
+        }
+        .correct-indicator {
+            color: #5cb85c;
+        }
+        .incorrect-indicator {
+            color: #d9534f;
+        }
+        #score-container {
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #ecf0f1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+        <h1>Commercial Law & Taxation</h1>
+        <h2>Multiple-Choice Questions Examination</h2>
+        
+        <form id="quiz-form">
+            <!-- Questions will be dynamically inserted here -->
+        </form>
+
+        <button id="submit-btn">Submit Answers</button>
+
+        <div id="score-container" style="display:none;"></div>
+    </div>
+
+    <script>
+        const quizData = [
+            // PATENT LAW
+            {
+                question: "1. Under the Intellectual Property Code, which test for patent infringement applies when a device incorporates an invention's innovative concept but with minor modifications, performing substantially the same function in substantially the same way to achieve substantially the same result?",
+                options: [
+                    "Literal Infringement Test",
+                    "Doctrine of Equivalents",
+                    "Fair Use Doctrine",
+                    "Novelty and Inventive Step Test"
+                ],
+                answer: 1,
+                explanation: "Legal Basis: The Doctrine of Equivalents, also known as the 'function-means-and-result test', dictates that infringement occurs when a device or process appropriates a prior invention by incorporating its innovative concept and, even with some modification, performs substantially the same function in substantially the same way to achieve substantially the same result."
+            },
+            {
+                question: "2. A company develops a manufacturing process that is identical to a patented process, except for a minor, non-essential alteration that does not change the core function or result. What is the most likely outcome of an infringement suit?",
+                options: [
+                    "No infringement, as the processes are not exactly identical.",
+                    "Infringement under the Literal Infringement Test.",
+                    "Infringement under the Doctrine of Equivalents.",
+                    "No infringement, as minor improvements are not patentable."
+                ],
+                answer: 2,
+                explanation: "Legal Basis: The Doctrine of Equivalents applies precisely in such situations. While the minor alteration may defeat a claim of literal infringement, liability can still attach if the modified process performs substantially the same function in the same way for the same result."
+            },
+            {
+                question: "3. In the context of patent law, literal infringement occurs when:",
+                options: [
+                    "The infringing product is functionally similar to the patented product.",
+                    "The infringing item contains some, but not all, of the elements of the patent claim.",
+                    "An item contains all the elements of a patent claim.",
+                    "The infringing product was created with knowledge of the existing patent."
+                ],
+                answer: 2,
+                explanation: "Legal Basis: Literal infringement requires that the accused device or process embodies every single element of a patent claim. The absence of even one element can preclude a finding of literal infringement."
+            },
+            {
+                question: "4. A key defense against literal infringement is that the accused product has a 'minor modification'. How does this defense interact with the Doctrine of Equivalents?",
+                options: [
+                    "It is a complete defense to any infringement claim.",
+                    "It defeats literal infringement but may still be liable under the Doctrine of Equivalents.",
+                    "It is irrelevant to both tests of infringement.",
+                    "It shifts the burden of proof to the patent holder to prove substantial similarity."
+                ],
+                answer: 1,
+                explanation: "Legal Basis: A minor modification may be sufficient to place an item beyond the scope of literal infringement. However, this very modification is what triggers the application of the Doctrine of Equivalents to determine if the innovative concept was still appropriated."
+            },
+             {
+                question: "5. XYZ Corp. patented a process for making coffee using beans roasted at exactly 150°C. ABC Corp. makes coffee using the same process but roasts the beans at 155°C, achieving the same quality and taste. XYZ Corp. sues for infringement. What is its strongest argument?",
+                options: [
+                    "That ABC's process is a literal infringement of the patent.",
+                    "That ABC's 5°C difference is an insubstantial change and the processes are equivalent.",
+                    "That any use of a similar roasting process constitutes unfair competition.",
+                    "That ABC's process lacks the novelty required to avoid infringement."
+                ],
+                answer: 1,
+                explanation: "Legal Basis: XYZ Corp's strongest argument is under the Doctrine of Equivalents. The change in temperature is a modification, but if it performs the same function (roasting beans) in substantially the same way (thermal process) to achieve the same result (quality coffee), it constitutes infringement."
+            },
+            {
+                question: "6. The 'function-means-and-result test' is primarily associated with which legal principle?",
+                options: [
+                    "Patentability requirements under the IPC.",
+                    "The test for copyright originality.",
+                    "The Doctrine of Equivalents in patent law.",
+                    "The test for trademark distinctiveness."
+                ],
+                answer: 2,
+                explanation: "Legal Basis: The 'function-means-and-result test' is the standard used to apply the Doctrine of Equivalents. It assesses whether a modified device or process performs substantially the same function in substantially the same way to achieve substantially the same result as the patented invention."
+            },
+             {
+                question: "7. When can a defendant in a patent infringement case successfully argue that their process, while similar, is not an infringement?",
+                options: [
+                    "When they can prove they were unaware of the patent.",
+                    "When their process involves a minor improvement over the patented one.",
+                    "When their process does not contain all elements of the patent claim and is not substantially equivalent.",
+                    "When their product is sold at a lower price than the patentee's."
+                ],
+                answer: 2,
+                explanation: "Legal Basis: To avoid liability, a defendant must show their process falls outside both tests: it does not literally infringe (lacks one or more patent elements) AND it does not infringe under the Doctrine of Equivalents (it performs a different function, or in a different way, or for a different result)."
+            },
+            // CORPORATION LAW
+            {
+                question: "8. How is the nationality of a corporation sole determined for the purpose of land acquisition in the Philippines?",
+                options: [
+                    "By the nationality of its chief presiding elder.",
+                    "By the country where it was first established.",
+                    "By the nationality of the members constituting the religious sect in the Philippines.",
+                    "A corporation sole is considered stateless and cannot own land."
+                ],
+                answer: 2,
+                explanation: "Legal Basis: For purposes of applying national laws on land acquisition, the nationality of a corporation sole is determined not by its presiding elder, but by the nationality of its members. Jurisprudence (Roman Catholic v. LRC) confirms this principle."
+            },
+            {
+                question: "9. A corporation sole, whose members are 100% Filipino citizens but is headed by a Canadian bishop, wishes to purchase a parcel of land. Is this transaction valid?",
+                options: [
+                    "No, because the head of the corporation is a foreigner.",
+                    "Yes, because at least 60% of its members are Filipinos.",
+                    "No, because religious corporations are prohibited from owning land.",
+                    "Yes, provided the land is used exclusively for religious purposes."
+                ],
+                answer: 1,
+                explanation: "Legal Basis: The transaction is valid. The law requires that for a corporation sole to acquire land, at least 60% of its members must be Filipinos. The nationality of the presiding elder is immaterial for this purpose."
+            },
+            {
+                question: "10. What is the primary purpose of a corporation sole under the Revised Corporation Code?",
+                options: [
+                    "To engage in profit-making activities for the church.",
+                    "To administer and manage, as trustee, the affairs and property of a religious denomination.",
+                    "To provide a legal personality to the presiding elder.",
+                    "To allow foreign religious sects to operate in the Philippines."
+                ],
+                answer: 1,
+                explanation: "Legal Basis: Section 106 of the Revised Corporation Code defines a corporation sole as one formed by a presiding elder for the purpose of administering and managing, as trustee, the affairs, property, and temporalities of any religious denomination, sect, or church."
+            },
+             {
+                question: "11. Based on prevailing jurisprudence, the rule that a corporation sole's capacity to own land depends on its members' nationality is intended to:",
+                options: [
+                    "Prevent foreign control of religious organizations.",
+                    "Uphold the constitutional prohibition on foreign ownership of land.",
+                    "Harmonize the Corporation Code with Canon Law.",
+                    "Limit the properties that a religious sect can acquire."
+                ],
+                answer: 1,
+                explanation: "Legal Basis: This rule respects the constitutional limitation on land ownership by aliens while allowing bona fide religious organizations, composed predominantly of Filipinos, to own property for their needs, irrespective of the nationality of their current leader."
+            },
+             {
+                question: "12. A religious sect in the Philippines is composed of 50% Filipinos and 50% foreign members. It is formed as a corporation sole headed by a Filipino priest. Can it acquire private land by purchase?",
+                options: [
+                    "Yes, because its head is a Filipino citizen.",
+                    "Yes, as long as the land is a reasonable size for a house of worship.",
+                    "No, because it fails to meet the 60% Filipino membership requirement.",
+                    "No, because any foreign membership disqualifies it from owning land."
+                ],
+                answer: 2,
+                explanation: "Legal Basis: The corporation sole cannot acquire land by purchase because it does not satisfy the 'at least 60% Filipino membership' requirement for purposes of land acquisition."
+            },
+             {
+                question: "13. A corporation sole is unique in that it is composed of:",
+                options: [
+                    "A single stockholder who owns all the shares.",
+                    "A board of trustees with a single member.",
+                    "One person, the presiding elder, for the purpose of administering church properties.",
+                    "A single member who must be a Filipino citizen."
+                ],
+                answer: 2,
+                explanation: "Legal Basis: A corporation sole is a special form of corporation, usually associated with the clergy, consisting of one person only and their successors, for the purpose of managing the temporalities of the church as a trustee."
+            },
+            // E-COMMERCE LAW
+            {
+                question: "14. Under the Electronic Commerce Act (R.A. 8792), when is the requirement of law for a document to be in writing met?",
+                options: [
+                    "When the document is printed on paper.",
+                    "When the document is notarized by a public official.",
+                    "When the requirement is met by an electronic document.",
+                    "When the parties verbally agree to be bound by electronic terms."
+                ],
+                answer: 2,
+                explanation: "Legal Basis: Section 7(a) of the Electronic Commerce Act provides that where the law requires a document to be in writing, that requirement is met by an electronic document. It is considered the functional equivalent of a written document."
+            },
+            {
+                question: "15. A buyer sends a message on a social media platform saying 'I accept your offer' to a seller's post. The seller sees the message but ignores it. Is a contract of sale perfected?",
+                options: [
+                    "No, because social media messages are not considered valid acceptances.",
+                    "Yes, if the acceptance was clear and made in response to a definite offer.",
+                    "No, because the seller did not formally acknowledge the acceptance.",
+                    "Yes, but only if the buyer immediately pays for the item."
+                ],
+                answer: 1,
+                explanation: "Legal Basis: The Electronic Commerce Act provides that an offer and the acceptance of an offer may be expressed in electronic data messages. A clear message of acceptance perfects the contract, as it is a meeting of the minds facilitated by electronic means."
+            },
+            {
+                question: "16. Which of the following is considered an 'electronic document' under the Electronic Commerce Act?",
+                options: [
+                    "A verbal agreement recorded on a phone.",
+                    "A photocopy of a signed contract.",
+                    "A screenshot of a chat conversation regarding a sale.",
+                    "A mental note to accept an offer."
+                ],
+                answer: 2,
+                explanation: "Legal Basis: The Act defines electronic documents broadly to include any printout or output, readable by sight, which accurately reflects an electronic data message. Social media communications and screenshots thereof fall under this definition."
+            },
+            {
+                question: "17. An online seller posts an item with the caption, 'First to comment 'Mine' gets it.' A person comments 'Mine' and takes a screenshot. The seller deletes the post and sells to another. The first commenter sues. What is the evidentiary value of the screenshot?",
+                options: [
+                    "It has no evidentiary value as it can be easily fabricated.",
+                    "It is considered an original document and proof of a perfected contract, subject to authentication.",
+                    "It is merely secondary evidence and requires the presentation of the original post.",
+                    "It is admissible only if the seller confirms its authenticity."
+                ],
+                answer: 1,
+                explanation: "Legal Basis: Under the Electronic Commerce Act, an electronic document like a screenshot is the functional equivalent of a written document and is considered the original for evidentiary purposes. It serves as adequate proof of the existence of a perfected contract, provided it can be properly authenticated."
+            },
+             {
+                question: "18. The 'functional equivalence' principle in the Electronic Commerce Act means that electronic documents:",
+                options: [
+                    "Are superior to paper-based documents in all legal proceedings.",
+                    "Serve the same legal function and are given the same legal effect as their paper-based counterparts.",
+                    "Must be certified by a government body to be considered equivalent.",
+                    "Are only equivalent if they are encrypted."
+                ],
+                answer: 1,
+                explanation: "Legal Basis: The principle of functional equivalence ensures that electronic communications and documents are not denied legal validity, effect, and enforceability solely on the grounds that they are in electronic form."
+            },
+             {
+                question: "19. For an online transaction on a social media platform to result in a perfected contract, what must be present?",
+                options: [
+                    "A digital signature from both parties.",
+                    "A definite offer and an unqualified acceptance communicated electronically.",
+                    "A formal electronic invoice issued by the seller.",
+                    "Payment of the purchase price through an online gateway."
+                ],
+                answer: 1,
+                explanation: "Legal Basis: Just like traditional contracts, the essential elements of consent (offer and acceptance), object, and cause must be present. The Electronic Commerce Act simply recognizes that these elements can be expressed and proven through electronic means."
+            },
+            // TAX LAW
+            {
+                question: "20. What is the fundamental principle governing the imposition of Value-Added Tax (VAT) on goods?",
+                options: [
+                    "The Origin Principle, where tax is imposed where the goods are produced.",
+                    "The Nationality Principle, where tax is based on the seller's citizenship.",
+                    "The Destination Principle, where tax is imposed where the goods are consumed.",
+                    "The Territoriality Principle, where tax is imposed if the sale occurs within the Philippines."
+                ],
+                answer: 2,
+                explanation: "Legal Basis: The Destination Principle is a fundamental characteristic of the VAT system. It dictates that goods and services are taxed only in the country where they are consumed. Therefore, exports are generally not subject to VAT (or are zero-rated)."
+            },
+            {
+                question: "21. A tourist buys a souvenir from a shop in Cebu to be brought back to Japan. Should the sale be subject to the 12% VAT?",
+                options: [
+                    "Yes, because the sale was perfected within Philippine territory.",
+                    "No, because the goods are destined for consumption outside the Philippines.",
+                    "Yes, because the seller is a VAT-registered entity in the Philippines.",
+                    "No, because tourists are exempt from all local taxes."
+                ],
+                answer: 1,
+                explanation: "Legal Basis: Applying the Destination Principle, since the ultimate consumption of the souvenir will occur outside the Philippines (in Japan), the sale should not be subject to Philippine VAT. This is considered an export sale."
+            },
+            {
+                question: "22. The sale of services performed in the Philippines to a foreign client who will consume the service abroad is generally subject to:",
+                options: [
+                    "12% VAT",
+                    "0% VAT",
+                    "VAT exemption",
+                    "Percentage Tax"
+                ],
+                answer: 1,
+                explanation: "Legal Basis: The imposition of 0% VAT on services performed in the Philippines for a foreign client (consumed abroad) is an application of the Destination Principle. While the service originates here, the tax is not imposed as consumption is elsewhere."
+            },
+            {
+                question: "23. A permanent resident of Canada buys a laptop from a store in Manila. She intends to use it during her two-week vacation in the Philippines and then bring it back to Canada. The store charges her 12% VAT. Is the imposition correct?",
+                options: [
+                    "No, because she is a foreign resident and the laptop is ultimately for use abroad.",
+                    "Yes, because there is consumption of the goods within the Philippines, even if temporary.",
+                    "No, because purchases by foreigners are automatically considered exports.",
+                    "Yes, because the Destination Principle only applies to services, not goods."
+                ],
+                answer: 1,
+                explanation: "Legal Basis: Unlike goods purchased at an airport duty-free shop immediately prior to departure, goods purchased and used within the Philippines are considered consumed locally. The Destination Principle would not apply to exempt the sale from VAT, as consumption occurred within the taxing jurisdiction."
+            },
+             {
+                question: "24. The Destination Principle supports the VAT system's goal of:",
+                options: [
+                    "Taxing production of goods and services.",
+                    "Avoiding double taxation and ensuring tax neutrality in international trade.",
+                    "Increasing government revenue from local sales.",
+                    "Taxing the income of the seller rather than the consumption of the buyer."
+                ],
+                answer: 1,
+                explanation: "Legal Basis: By taxing goods and services only in the country of consumption, the Destination Principle prevents the double taxation that would occur if both the exporting and importing countries imposed VAT. This promotes tax neutrality in cross-border trade."
+            },
+            // INSURANCE LAW
+            {
+                question: "25. Which of the following best defines 'double insurance'?",
+                options: [
+                    "When a property is insured for double its actual value.",
+                    "When two different persons insure the same property for their respective interests.",
+                    "When the same person is insured by several insurers separately in respect to the same subject and same interest.",
+                    "When an insurance policy is renewed twice in the same year."
+                ],
+                answer: 2,
+                explanation: "Legal Basis: Double insurance exists only when all the following elements concur: the same person is insured; there are several insurers; the subject matter is the same; the interest insured is the same; and the peril or risk insured against is the same."
+            },
+            {
+                question: "26. Is double insurance prohibited by law in the Philippines?",
+                options: [
+                    "Yes, it is considered a fraudulent act and is strictly prohibited.",
+                    "No, it is not prohibited by law, but it may be prohibited by a clause in the insurance policy.",
+                    "Yes, but only for fire insurance policies.",
+                    "No, it is actively encouraged to ensure full coverage."
+                ],
+                answer: 1,
+                explanation: "Legal Basis: There is no general legal prohibition against double insurance in the Philippines. However, insurance policies often contain an 'Other Insurance Clause' which may prohibit it contractually and void the policy if violated."
+            },
+            {
+                question: "27. A mortgagor insures his mortgaged house for its full value. The mortgagee separately insures the same house for the amount of the loan. A fire guts the house. This situation constitutes:",
+                options: [
+                    "Prohibited double insurance.",
+                    "Over-insurance by the mortgagor.",
+                    "Valid insurance by two different parties with separate and distinct insurable interests.",
+                    "A case of subrogation for both insurance companies."
+                ],
+                answer: 2,
+                explanation: "Legal Basis: This is not double insurance because the insured persons (mortgagor and mortgagee) are different, and their insurable interests are separate and distinct. The mortgagor's interest is in the full value of the property, while the mortgagee's interest is only to the extent of the outstanding debt."
+            },
+            {
+                question: "28. What is the insurable interest of a mortgagee in a mortgaged property?",
+                options: [
+                    "The full market value of the property.",
+                    "The replacement cost of the property.",
+                    "The extent of the debt secured by the mortgage.",
+                    "An interest equal to that of the mortgagor."
+                ],
+                answer: 2,
+                explanation: "Legal Basis: The insurable interest of a mortgagee is limited to the amount of the outstanding loan. They can only be damnified by a peril up to the extent that their security for the debt is lost."
+            },
+            {
+                question: "29. An insurer denies a claim because the insured failed to disclose that another insurance policy existed on the same property. The insurer's denial would be valid if:",
+                options: [
+                    "The law generally prohibits double insurance.",
+                    "The insured's policy contained an 'Other Insurance Clause' that was violated.",
+                    "The total insurance coverage exceeded the property's value.",
+                    "The second policy was taken out by a different person."
+                ],
+                answer: 1,
+                explanation: "Legal Basis: The validity of the denial would rest on a contractual breach, specifically the violation of an 'Other Insurance Clause' in the policy. Without such a clause, the mere existence of another policy is not a ground for denial."
+            },
+             {
+                question: "30. X owns a car and insures it with Company A. X's father, who occasionally uses the car, also insures it with Company B. This is:",
+                options: [
+                    "A clear case of illegal double insurance.",
+                    "Not double insurance if the father has a separate insurable interest.",
+                    "Valid only if both companies agree to the arrangement.",
+                    "A case of co-insurance."
+                ],
+                answer: 1,
+                explanation: "Legal Basis: This would not be double insurance if the father, perhaps as a frequent user who would suffer a financial loss if the car were damaged, can establish his own insurable interest separate from the owner's. Insurable interest can arise from factual expectancy of benefit, not just legal title."
+            },
+             {
+                question: "31. The primary reason a mortgagor and mortgagee are considered to have separate insurable interests is because:",
+                options: [
+                    "They are two different persons.",
+                    "They stand to lose different things in case of the property's destruction.",
+                    "The Insurance Code explicitly grants them separate rights.",
+                    "One has legal title while the other has equitable title."
+                ],
+                answer: 1,
+                explanation: "Legal Basis: Their interests are distinct because their potential losses are different. The mortgagor (owner) stands to lose the entire value of the property. The mortgagee (creditor) stands to lose the value of the unpaid debt for which the property serves as security."
+            },
+            // MIXED/APPLICATION QUESTIONS
+            {
+                question: "32. In determining the nationality of a business entity for purposes of complying with constitutional limitations on ownership, which entity's nationality is determined by its membership rather than its head?",
+                options: [
+                    "A one-person corporation.",
+                    "A partnership.",
+                    "A joint venture.",
+                    "A corporation sole."
+                ],
+                answer: 3,
+                explanation: "Legal Basis: Unlike other corporate entities where ownership structure (stockholders) is key, the corporation sole is unique. Its nationality for land ownership is based on the citizenship of its members, not its single incorporating officer."
+            },
+            {
+                question: "33. The principles of the Electronic Commerce Act and the Destination Principle in VAT are similar in that both:",
+                options: [
+                    "Are primarily concerned with cross-border transactions.",
+                    "Provide rules for determining the legal jurisdiction for transactions.",
+                    "Adapt traditional legal concepts to modern commercial realities.",
+                    "Are derived from international treaties."
+                ],
+                answer: 2,
+                explanation: "Legal Basis: The Electronic Commerce Act adapts contract law (offer, acceptance, writing) to the digital age. The Destination Principle adapts consumption tax to the realities of global trade. Both update legal frameworks for modern commerce."
+            },
+            {
+                question: "34. A patented process is copied with a slight temperature variation. An online contract is proven with a screenshot. A mortgagor and mortgagee insure the same car. What common theme underlies the resolution of these three issues?",
+                options: [
+                    "The law prioritizes form over substance.",
+                    "The law looks at the substantial reality and intent rather than strict, literal form.",
+                    "All issues are resolved by the Civil Code.",
+                    "All issues demonstrate exceptions to general rules."
+                ],
+                answer: 1,
+                explanation: "Legal Basis: The Doctrine of Equivalents looks beyond literal differences. The E-Commerce Act sees a screenshot as functionally a written document. Insurance law recognizes two distinct substantive interests in one object. In all cases, the law analyzes the substance of the situation."
+            },
+            {
+                question: "35. A foreigner who heads a religious organization composed of 70% Filipinos wants to buy land for a church. A Filipino who resides in Canada wants to buy wine at the airport for consumption abroad. Which statement is correct?",
+                options: [
+                    "Both transactions are valid and should be allowed without issue.",
+                    "The land purchase is valid, but the wine purchase should be subject to VAT.",
+                    "The land purchase is prohibited, but the wine purchase should be VAT-free.",
+                    "The land purchase is valid, and the wine purchase should be VAT-free."
+                ],
+                answer: 3,
+                explanation: "Legal Basis: The land purchase is valid as the corporation sole meets the 60% Filipino membership rule. The wine purchase, being for consumption abroad, should be free from Philippine VAT under the Destination Principle."
+            },
+            {
+                question: "36. Which legal concept prevents a party from making minor, cosmetic changes to a patented invention to avoid liability?",
+                options: [
+                    "The principle of functional equivalence in e-commerce.",
+                    "The separate insurable interest rule.",
+                    "The Doctrine of Equivalents.",
+                    "The Destination Principle."
+                ],
+                answer: 2,
+                explanation: "Legal Basis: The very purpose of the Doctrine of Equivalents is to prevent infringers from escaping liability by making trivial modifications that do not alter the essential function, means, and result of the patented invention."
+            },
+            {
+                question: "37. An online seller and buyer agree on the sale of a bag via chat. The buyer sends a screenshot of their agreement as proof. This screenshot serves a similar legal function to what traditional document?",
+                options: [
+                    "A notarized deed of sale.",
+                    "A bill of lading.",
+                    "A signed purchase order or memorandum of agreement.",
+                    "An official receipt."
+                ],
+                answer: 2,
+                explanation: "Legal Basis: Under the Electronic Commerce Act, the screenshot is the 'functional equivalent of a written document.' It serves to prove the existence and terms of the agreement, much like a signed paper contract or memorandum would."
+            },
+            {
+                question: "38. Company A holds a patent. Company B uses a process that is not identical but achieves the same result. The legal test to determine infringement will focus on:",
+                options: [
+                    "Whether Company B's process is cheaper.",
+                    "Whether Company B's modifications constitute a new invention.",
+                    "Whether Company B's process performs substantially the same function in substantially the same way.",
+                    "Whether Company B was aware of Company A's patent."
+                ],
+                answer: 2,
+                explanation: "Legal Basis: This question directly invokes the 'function-means-and-result test,' which is the core of the Doctrine of Equivalents used to assess infringement by non-identical processes."
+            },
+            {
+                question: "39. The rule on the nationality of a corporation sole for land ownership is an exception to the general rule that a corporation's nationality is determined by:",
+                options: [
+                    "The place of its incorporation (Incorporation Test).",
+                    "The nationality of the controlling stockholders (Control Test).",
+                    "The nationality of its board of directors.",
+                    "Its primary place of business."
+                ],
+                answer: 1,
+                explanation: "Legal Basis: Generally, for purposes of nationalized activities, the Control Test is used to determine corporate nationality. The rule for a corporation sole is a specific exception tailored to its unique nature and the constitutional mandate."
+            },
+            {
+                question: "40. A debtor owns a building and insures it. The creditor, to whom the building is mortgaged, also insures it. Which principle allows both insurance policies to be valid?",
+                options: [
+                    "The principle of subrogation.",
+                    "The concept of double insurance.",
+                    "The principle that a mortgagor and mortgagee have separate and distinct insurable interests.",
+                    "The principle of utmost good faith."
+                ],
+                answer: 2,
+                explanation: "Legal Basis: The validity of both policies rests on the foundational insurance law principle that the mortgagor (as owner) and the mortgagee (as creditor) have different insurable interests in the same subject matter. Therefore, it does not constitute prohibited double insurance."
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const quizForm = document.getElementById('quiz-form');
+            const submitBtn = document.getElementById('submit-btn');
+            const scoreContainer = document.getElementById('score-container');
+
+            function renderQuiz() {
+                let quizHtml = '';
+                quizData.forEach((q, index) => {
+                    quizHtml += `
+                        <div class="question-block" id="q-block-${index}">
+                            <div class="question-text">${q.question}</div>
+                            <div class="options-container">
+                    `;
+                    q.options.forEach((option, i) => {
+                        quizHtml += `
+                            <label for="q${index}_option${i}">
+                                <input type="radio" name="question${index}" id="q${index}_option${i}" value="${i}">
+                                ${option}
+                            </label>
+                        `;
+                    });
+                    quizHtml += `
+                            </div>
+                            <div class="explanation" id="explanation-${index}">${q.explanation}</div>
+                        </div>
+                    `;
+                });
+                quizForm.innerHTML = quizHtml;
+            }
+
+            submitBtn.addEventListener('click', () => {
+                let score = 0;
+                const radioButtons = quizForm.querySelectorAll('input[type="radio"]');
+
+                quizData.forEach((q, index) => {
+                    const selectedOption = quizForm.querySelector(`input[name="question${index}"]:checked`);
+                    const explanationEl = document.getElementById(`explanation-${index}`);
+                    const questionBlockEl = document.getElementById(`q-block-${index}`);
+                    const questionTextEl = questionBlockEl.querySelector('.question-text');
+                    
+                    // Remove existing indicators
+                    const existingIndicator = questionTextEl.querySelector('.result-indicator');
+                    if(existingIndicator) {
+                        existingIndicator.remove();
+                    }
+                    
+                    const indicator = document.createElement('span');
+                    indicator.classList.add('result-indicator');
+
+                    if (selectedOption) {
+                        const userAnswer = parseInt(selectedOption.value);
+                        const correctLabel = selectedOption.parentElement;
+                        
+                        if (userAnswer === q.answer) {
+                            score++;
+                            indicator.textContent = 'Correct';
+                            indicator.classList.add('correct-indicator');
+                            correctLabel.classList.add('correct-answer');
+                        } else {
+                            indicator.textContent = 'Incorrect';
+                            indicator.classList.add('incorrect-indicator');
+                            correctLabel.classList.add('incorrect-answer');
+                            // also highlight the correct one
+                             const actualCorrectLabel = quizForm.querySelector(`#q${index}_option${q.answer}`).parentElement;
+                             actualCorrectLabel.classList.add('correct-answer');
+                        }
+                    } else {
+                        indicator.textContent = 'Unanswered';
+                        indicator.classList.add('incorrect-indicator');
+                    }
+                    
+                    questionTextEl.appendChild(indicator);
+                    explanationEl.style.display = 'block';
+                });
+                
+                radioButtons.forEach(rb => rb.disabled = true);
+                scoreContainer.innerHTML = `Your Final Score: ${score} out of ${quizData.length}`;
+                scoreContainer.style.display = 'block';
+                submitBtn.style.display = 'none';
+            });
+
+            renderQuiz();
+        });
+    </script>
+</body>
+</html>
