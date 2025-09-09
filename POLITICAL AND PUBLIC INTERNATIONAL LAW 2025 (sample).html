@@ -1,0 +1,314 @@
+<!-- You can edit the question and the model answer directly in the HTML source code of this file. -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Legal Q&A</title>
+    <style>
+        :root {
+            --primary-color: #005a9c;
+            --secondary-color: #f0f8ff;
+            --border-color: #dcdcdc;
+            --text-color: #333;
+            --bg-color: #ffffff;
+            --danger-color: #d9534f;
+            --success-color: #5cb85c;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f9;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .widget-container {
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 90, 156, 0.2);
+        }
+
+        .question-block, .user-answer-block {
+            margin-bottom: 1.5rem;
+        }
+
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .button:active {
+            transform: translateY(1px);
+        }
+        
+        .button-primary {
+            background-color: var(--primary-color);
+            color: white;
+            flex-grow: 1;
+        }
+
+        .button-primary:hover {
+            background-color: #004b80;
+        }
+
+        .button-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .button-secondary:hover {
+            background-color: #5a6268;
+        }
+
+        .model-answer-container {
+            background-color: var(--secondary-color);
+            border: 1px solid #cce7ff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            position: relative;
+        }
+
+        .model-answer-container.hidden {
+            display: none;
+        }
+
+        .model-answer-section {
+            margin-bottom: 1rem;
+        }
+        
+        .model-answer-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .model-answer-section h3 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            border-bottom: 2px solid #bde0ff;
+            padding-bottom: 0.25rem;
+        }
+
+        .model-answer-section p, .model-answer-section div {
+            margin: 0;
+        }
+
+        .utility-buttons {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .utility-button {
+            background: none;
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        
+        .utility-button:hover {
+            background-color: #e9ecef;
+            color: #333;
+        }
+        
+        .utility-button svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .shortcut-info {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-left: auto;
+        }
+
+    </style>
+</head>
+<body>
+
+    <main class="widget-container">
+        <h1>Legal Case Analysis</h1>
+
+        <!-- Question Section -->
+        <div class="question-block">
+            <label for="question">Question</label>
+            <textarea id="question" rows="8">ABC Construction Company was engaged by XYZ Group Inc. to build an eight-storey building with a height of 34.4 meters located behind the intended new airport in Bulacan. A month later, Ordinance No. 12345 was passed by the Sangguniang Panlalawigan of Bulacan, setting the height limit on the buildings to be constructed along the new airport to five storeys or a maximum height of 21.5 meters. After building five storeys, ABC Construction Company served a notice on XYZ Group Inc. that it can no longer build the sixth, seventh, and eighth floors of the building in view of Ordinance No. 12345. XYZ Group Inc. consequently assailed Ordinance No. 12345 for allegedly violating the non-impairment clause of the Constitution. Will the case prosper?</textarea>
+        </div>
+
+        <!-- User's Answer Section -->
+        <div class="user-answer-block">
+            <label for="user-answer">Your Answer</label>
+            <textarea id="user-answer" rows="6" placeholder="Type your analysis here..."></textarea>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="button-group">
+            <button id="reveal-answer-btn" class="button button-primary">Reveal Answer</button>
+            <button id="clear-answer-btn" class="button button-secondary">Clear My Answer</button>
+            <span class="shortcut-info">Shortcut: Ctrl/Cmd + Enter</span>
+        </div>
+
+        <!-- Model Answer Section (Initially Hidden) -->
+        <div id="model-answer-container" class="model-answer-container hidden">
+            <div class="utility-buttons">
+                <button id="copy-answer-btn" class="utility-button" title="Copy Suggested Answer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" /></svg>
+                </button>
+                <button id="hide-answer-btn" class="utility-button" title="Hide Answer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+
+            <div class="model-answer-section" data-label="Answer">
+                <h3>Answer</h3>
+                <p>NO.</p>
+            </div>
+
+            <div class="model-answer-section" data-label="Legal Basis">
+                <h3>Legal Basis</h3>
+                <p>The Constitution provides that "No law impairing the obligation of contracts shall be passed". However, this prohibition is not absolute and must yield to the superior power of the State, known as police power. Police power is the inherent power of the State to enact regulations to secure the general welfare of the community. Local Government Units (LGUs) are empowered to exercise this for the general welfare within their jurisdictions. For an ordinance to be a valid exercise of police power, it must be reasonable, not contravene the Constitution, not be unfair or oppressive, and be consistent with public policy.</p>
+            </div>
+
+            <div class="model-answer-section" data-label="Application">
+                <h3>Application</h3>
+                <p>Ordinance No. 12345, which sets a height limit for buildings near the new airport, is a zoning regulation directly related to public safety, specifically air navigation. Ensuring clear flight paths is a paramount public interest falling within the scope of police power. While the ordinance impacts the contract between ABC Construction and XYZ Group Inc., this impairment is an incidental consequence of a valid governmental act aimed at safeguarding public safety. The ordinance regulates property use, not a "taking" of property, and is a reasonable restriction on proprietary rights for the public good.</p>
+            </div>
+
+            <div class="model-answer-section" data-label="Conclusion">
+                <h3>Conclusion</h3>
+                <p>Thus, the answer is NO. The case will not prosper because the non-impairment clause must yield to the valid exercise of police power for public safety and general welfare.</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const revealBtn = document.getElementById('reveal-answer-btn');
+            const hideBtn = document.getElementById('hide-answer-btn');
+            const clearBtn = document.getElementById('clear-answer-btn');
+            const copyBtn = document.getElementById('copy-answer-btn');
+            const modelAnswerContainer = document.getElementById('model-answer-container');
+            const userAnswerTextarea = document.getElementById('user-answer');
+
+            const showAnswer = () => {
+                modelAnswerContainer.classList.remove('hidden');
+            };
+
+            const hideAnswer = () => {
+                modelAnswerContainer.classList.add('hidden');
+            };
+
+            // Event Listeners for buttons
+            revealBtn.addEventListener('click', showAnswer);
+            hideBtn.addEventListener('click', hideAnswer);
+
+            clearBtn.addEventListener('click', () => {
+                userAnswerTextarea.value = '';
+                userAnswerTextarea.focus();
+            });
+
+            copyBtn.addEventListener('click', () => {
+                const sections = modelAnswerContainer.querySelectorAll('.model-answer-section');
+                let textToCopy = '';
+                
+                sections.forEach(section => {
+                    const label = section.dataset.label;
+                    const content = section.querySelector('p, div').innerText;
+                    textToCopy += `${label.toUpperCase()}\n${content}\n\n`;
+                });
+
+                // Use a temporary textarea to copy text
+                const tempTextarea = document.createElement('textarea');
+                tempTextarea.value = textToCopy.trim();
+                document.body.appendChild(tempTextarea);
+                tempTextarea.select();
+                try {
+                    document.execCommand('copy');
+                    // Visual feedback
+                    const originalContent = copyBtn.innerHTML;
+                    copyBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="color: var(--success-color);"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>`;
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalContent;
+                    }, 2000);
+                } catch (err) {
+                    console.error('Failed to copy text: ', err);
+                }
+                document.body.removeChild(tempTextarea);
+            });
+
+            // Keyboard shortcut listener
+            document.addEventListener('keydown', (event) => {
+                if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+                    event.preventDefault(); // Prevent default action (e.g., new line in textarea)
+                    showAnswer();
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
