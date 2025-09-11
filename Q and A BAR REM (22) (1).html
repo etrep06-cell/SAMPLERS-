@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remedial Law MCQ Challenge (Based on 2022 Bar Q&A)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .question-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+        .question-container:hover {
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .option-label {
+            display: block;
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        .option-label:hover {
+            background-color: #f9fafb;
+            border-color: #6366f1;
+        }
+        input[type="radio"]:checked + .option-label {
+            background-color: #e0e7ff;
+            border-color: #4f46e5;
+            font-weight: 500;
+        }
+        .result-indicator {
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 9999px;
+            margin-left: 10px;
+        }
+        .correct {
+            color: #166534;
+            background-color: #dcfce7;
+        }
+        .incorrect {
+            color: #991b1b;
+            background-color: #fee2e2;
+        }
+        .explanation {
+            background-color: #f8fafc;
+            border-left: 4px solid #6366f1;
+            padding: 12px;
+            margin-top: 12px;
+            font-size: 0.9em;
+            color: #374151;
+            border-radius: 0 4px 4px 0;
+        }
+        .submit-btn {
+            background-color: #4f46e5;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 20px auto;
+        }
+        .submit-btn:hover {
+            background-color: #4338ca;
+        }
+        #score-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background-color: white;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: 700;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            border-top: 1px solid #e5e7eb;
+            z-index: 100;
+        }
+        input[type="radio"] {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800 p-4 sm:p-6 md:p-8">
+
+    <div class="max-w-4xl mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">Remedial Law MCQ Challenge</h1>
+            <p class="text-md text-gray-600 mt-2">Based on the 2022 BAR Questions and Suggested Answers</p>
+        </header>
+
+        <form id="mcq-form">
+            <div id="questions-container"></div>
+            <button type="submit" class="submit-btn">Submit Answers</button>
+        </form>
+
+        <div id="score-container" class="hidden">
+            <span id="score"></span>
+        </div>
+    </div>
+
+    <script>
+    // --- DATA ---
+    // This section contains all the questions, options, correct answers, and explanations.
+    const questions = [
+        {
+            question: "1. Lebron obtained a loan of Php 350,000 secured by a Real Estate Mortgage on his lot in Quezon City, which has an assessed value of Php 500,000. If the bank files an action for judicial foreclosure, what is the proper court and venue?",
+            options: [
+                "Metropolitan Trial Court of Quezon City, as the loan amount is below Php 400,000.",
+                "Regional Trial Court of Makati City, as it is a personal action to collect a debt.",
+                "Regional Trial Court of Quezon City, because judicial foreclosure is a real action and the assessed value exceeds Php 50,000.",
+                "Metropolitan Trial Court of Makati City, where the plaintiff resides."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: An action for judicial foreclosure is a real action. Venue is where the property is located (Quezon City). Jurisdiction is with the RTC as the assessed value of the real property (Php 500,000) exceeds Php 50,000 (BP 129). (See Q&A No. 1)"
+        },
+        {
+            question: "2. A sheriff attempted to serve summons on Kobe at a Makati hotel. After failing to serve him personally, the sheriff left the summons with the hotel's chief security officer. Was there a valid substituted service?",
+            options: [
+                "Yes, because the sheriff made several attempts to serve the summons personally.",
+                "Yes, because the chief security officer is a person of suitable age and discretion at the defendant's temporary residence.",
+                "No, because substituted service on a chief security officer is only valid in a homeowners' community or condominium, not a hotel.",
+                "No, because the sheriff should have resorted to service by publication immediately."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: Sec. 6(c), Rule 14 allows substituted service on a chief security officer of a homeowners' community or condominium building where the defendant is found. This does not extend to a hotel's security officer. Furthermore, the defendant had already checked out. (See Q&A No. 2)"
+        },
+        {
+            question: "3. Ten days after service of summons, the defendant filed a motion to dismiss based on improper service of summons. As the judge, how should you rule on the motion?",
+            options: [
+                "Grant the motion, as lack of jurisdiction over the person is a valid ground.",
+                "Deny the motion, because a motion to dismiss on this ground is a prohibited motion.",
+                "Treat the motion as an Answer and proceed to trial.",
+                "Order the plaintiff to re-serve the summons correctly."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: Under Sec. 12(a), Rule 15, a motion to dismiss is a prohibited motion, except for four grounds: lack of subject matter jurisdiction, res judicata, lis pendens, or prescription. Improper service of summons is not one of the exceptions. (See Q&A No. 3)"
+        },
+        {
+            question: "4. A lawyer served a motion for reconsideration via an accredited courier. The opposing counsel moved to deny it for lacking a written explanation for non-personal service. Is the opposing counsel's argument correct?",
+            options: [
+                "Yes, all pleadings must prioritize personal service and explain why it was not done.",
+                "No, the 2019 Rules of Civil Procedure deleted the requirement for a written explanation for non-personal service.",
+                "Yes, because service by courier is the last resort and must be justified.",
+                "No, but only if the courier provides a sworn affidavit of service."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: The 2019 amendments to the Rules of Civil Procedure removed the requirement for a written explanation when a pleading or motion is not served personally. (See Q&A No. 4a)"
+        },
+        {
+            question: "5. What constitutes proof of service for a motion served via an accredited courier?",
+            options: [
+                "The courier's official receipt only.",
+                "An affidavit of the person who delivered it to the courier and the courier's official receipt or tracking number.",
+                "A certification from the courier company that the document was delivered.",
+                "The tracking history printed from the courier's website."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: Sec. 17(c), Rule 13 requires an affidavit of service from the person who brought the document to the courier, along with the official receipt or document tracking number provided by the courier. (See Q&A No. 4b)"
+        },
+        {
+            question: "6. Jimuel first sued for nullity of marriage based on psychological incapacity, which was denied. He later filed another petition for nullity based on the absence of a marriage license. The court dismissed the second petition on the ground of res judicata. Was the dismissal proper?",
+            options: [
+                "No, because the causes of action (psychological incapacity vs. lack of license) are different.",
+                "No, because res judicata does not apply to nullity of marriage cases.",
+                "Yes, under the concept of conclusiveness of judgment, as the issue of the marriage's validity was already settled.",
+                "Yes, under the concept of bar by prior judgment, as the ground of lack of license could have been raised in the first action."
+            ],
+            correctAnswer: 3,
+            explanation: "Legal Basis: This is an application of res judicata in the concept of conclusiveness of judgment. A judgment is conclusive not only on matters directly adjudged but also on any other matter that could have been raised in relation thereto. The lack of a marriage license could have been raised in the first petition. (Mallion v. Alcantara; See Q&A No. 5)"
+        },
+        {
+            question: "7. A resident filed an action to enjoin a company's kitchen operations and revoke its business permit, praying for a Writ of Preliminary Injunction (WPI). The company filed a verified answer opposing the WPI. Can the court issue the WPI at this stage?",
+            options: [
+                "Yes, because the verified answer shows that the issues have been joined.",
+                "Yes, if the complaint is verified and shows a clear right to the relief demanded.",
+                "No, because a preliminary injunction cannot be issued without a hearing.",
+                "No, because the potential financial damage to the company outweighs the resident's claims."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: Section 5, Rule 58 explicitly states that no preliminary injunction shall be granted without a hearing. Even with a verified answer filed, a hearing is a mandatory prerequisite. (See Q&A No. 6)"
+        },
+        {
+            question: "8. Is a separate special proceeding to establish one's status as a legal heir a prerequisite to filing an ordinary civil action to enforce ownership rights?",
+            options: [
+                "Yes, heirship must first be declared in a special proceeding before an heir can sue to protect property.",
+                "No, because the rights to succession are transmitted from the moment of the decedent's death under Art. 777 of the Civil Code.",
+                "Yes, unless the parties unanimously agree on the partition and distribution.",
+                "No, but only if the decedent left no will and no debts."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: A prior determination of heirship in a separate special proceeding is not a prerequisite. The Supreme Court held in Treyes v. Larlar that pursuant to Art. 777 of the Civil Code, heirs can immediately file an action to protect their rights without a separate declaration of heirship. (See Q&A No. 7)"
+        },
+        {
+            question: "9. A Filipina, married in Makati, obtained a divorce by mutual agreement in South Korea. She filed a petition for recognition of the foreign divorce decree in the RTC of Cebu, her place of residence. The OSG argued the proper remedy is a Rule 108 petition filed in Makati. Is the OSG correct?",
+            options: [
+                "Yes, Rule 108 is the exclusive remedy and venue is where the marriage was recorded.",
+                "No, a petition for recognition of a foreign divorce decree is a proper remedy, and it can be filed independently of a Rule 108 petition.",
+                "Yes, because the divorce was by mutual agreement, which is against public policy.",
+                "No, the proper remedy is a declaratory relief, not a petition for recognition."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: A petition for recognition of a foreign divorce decree is a proper remedy. While it may be done in a Rule 108 proceeding, the Supreme Court did not prohibit filing it as a separate and independent action. (Corpuz v. Sto. Tomas; See Q&A No. 8)"
+        },
+        {
+            question: "10. In a forcible entry case, the MTC ruled against ten defendants. They appealed but failed to file a supersedeas bond. The sheriff, implementing the writ of execution, found the land occupied by lessees of the defendants. Can the sheriff enforce the writ against these lessees?",
+            options: [
+                "No, because the lessees were not parties to the forcible entry case.",
+                "No, the sheriff must first file a separate ejectment case against the lessees.",
+                "Yes, because a judgment in an ejectment case is enforceable against the defendant and their privies, including lessees.",
+                "Yes, but only after the lessees are given 30 days' notice to vacate."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: A judgment in an ejectment case is binding not only on the defendants but also on their privies, which includes sublessees, co-lessees, and members of their family or employees. The lessees' right to possess is derived from the defendants. (See Q&A No. 9)"
+        },
+        {
+            question: "11. An Information for Murder alleged that the accused, 'with intent to kill and with treachery and abuse of superior strength,' attacked the victim. The accused moved to quash, arguing the Information does not conform to the prescribed form. Is the accused correct?",
+            options: [
+                "No, the allegation of 'treachery' is sufficient to inform the accused of the charge.",
+                "No, the specific acts are matters of evidence to be presented during trial.",
+                "Yes, because the Information failed to specify the acts constituting treachery.",
+                "Yes, because the Information should have been for Homicide, as treachery was not detailed."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: The Supreme Court has held that an Information must specifically allege the facts and circumstances constituting treachery. Merely stating the word 'treachery' is insufficient and makes the Information non-compliant with the prescribed form. (People v. Solar; See Q&A No. 10)"
+        },
+        {
+            question: "12. Cain pleaded guilty to Murder, a capital offense. The RTC accepted the plea but the prosecution failed to present any evidence. The RTC convicted Cain based solely on his plea of guilt. Was the conviction proper?",
+            options: [
+                "Yes, a plea of guilt is a judicial admission of all material facts alleged in the Information.",
+                "Yes, because the judge was convinced the plea was made voluntarily.",
+                "No, because in capital offenses, the court must still require the prosecution to prove the accused's guilt and the precise degree of culpability.",
+                "No, because a plea of guilt to a capital offense must be made with the assistance of two counsels."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: Section 3, Rule 116 mandates that when an accused pleads guilty to a capital offense, the court must require the prosecution to prove guilt and the precise degree of culpability. A conviction cannot be based solely on the plea. (See Q&A No. 11)"
+        },
+        {
+            question: "13. Which of the following is an order authorizing law enforcement to listen to, record, or monitor the content of communications as they are occurring?",
+            options: [
+                "Warrant to Disclose Computer Data (WDCD)",
+                "Warrant to Intercept Computer Data (WICD)",
+                "Warrant to Search, Seize and Examine Computer Data (WSSECD)",
+                "Warrant of Cyber-Surveillance"
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: A Warrant to Intercept Computer Data (WICD) is the specific warrant under the Rule on Cybercrime Warrants that authorizes the real-time surveillance of communications content. (See Q&A No. 12)"
+        },
+        {
+            question: "14. Ricky, in a car accident, offered to pay for the damages to Dante's car. Dante filed a criminal case for Reckless Imprudence and sought to introduce the offer as an admission of guilt. Ricky's counsel objected. How should the judge rule?",
+            options: [
+                "Overrule the objection, as an offer of compromise is an implied admission of guilt in criminal cases.",
+                "Sustain the objection, because an offer of compromise in cases involving quasi-offenses is not admissible as an admission of guilt.",
+                "Overrule the objection, as it is part of the res gestae.",
+                "Sustain the objection, but only if the offer was made during pre-trial."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: Section 28, Rule 130 provides that an offer of compromise is not an admission of guilt in quasi-offenses (criminal negligence) or those allowed by law to be compromised. Reckless Imprudence is a quasi-offense. (See Q&A No. 13)"
+        },
+        {
+            question: "15. Vanya testified about CCTV footage she transferred from a barangay-owned CCTV to a flash drive. The defense objected to the footage's admissibility because Vanya was not the one who recorded it. Is the footage admissible?",
+            options: [
+                "No, only the person who recorded the video can authenticate it.",
+                "No, the original CCTV hard drive must be presented in court under the Original Document Rule.",
+                "Yes, because video evidence can be authenticated by the recorder or by any other person competent to testify on its accuracy.",
+                "Yes, because CCTV footage is public record and does not require authentication."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: Sec. 1, Rule 11 of the Rules on Electronic Evidence allows video to be authenticated not just by the recorder, but also by 'some other person competent to testify on the accuracy thereof.' As the person who transferred the footage and witnessed the events, Vanya is competent to testify on its accuracy. (See Q&A No. 14)"
+        },
+        {
+            question: "16. In an Estafa case, the prosecution offered a photocopy of an acknowledgment receipt. The accused objected based on the original document rule. The court admitted the photocopy. Did the court err?",
+            options: [
+                "Yes, the original document must be produced as it is the best evidence.",
+                "Yes, unless the prosecution can prove the original was lost or destroyed.",
+                "No, because a photocopy is a duplicate and is admissible to the same extent as an original under the revised rules.",
+                "No, because the original document rule does not apply in criminal cases."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: The 2019 Rules on Evidence state that a duplicate (like a photocopy) is admissible to the same extent as an original, unless a genuine question is raised as to the original's authenticity or it is unjust to admit the duplicate. (Sec. 4, Rule 130). (See Q&A No. 15)"
+        },
+        {
+            question: "17. After a motion for reconsideration of an RTC decision is denied, what is the reglementary period to file a Notice of Appeal to the Court of Appeals?",
+            options: [
+                "A fresh period of 15 days from notice of the denial.",
+                "The remaining period of the initial 15 days.",
+                "A fresh period of 30 days from notice of the denial.",
+                "48 hours from notice of the denial."
+            ],
+            correctAnswer: 0,
+            explanation: "Legal Basis: The 'fresh period rule' established in Neypes v. Court of Appeals provides that a party has a fresh period of 15 days from the receipt of the order denying the motion for reconsideration to file a notice of appeal. (See Remedial Law II, Q&A No. 1a)"
+        },
+        {
+            question: "18. What is the reglementary period for filing a Petition for Certiorari under Rule 65 after a motion for reconsideration is denied?",
+            options: [
+                "Within 15 days from notice of denial.",
+                "Within 30 days from notice of denial.",
+                "Within 60 days from notice of denial.",
+                "The remaining period of the initial 60 days."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: Section 4, Rule 65 states the petition shall be filed not later than 60 days from notice of the judgment, order, or resolution. If a motion for reconsideration was filed, the period is 60 days from notice of the denial of said motion. (See Remedial Law II, Q&A No. 1b)"
+        },
+        {
+            question: "19. An RTC decision is appealed to the CA under Rule 42. A motion for reconsideration is denied. What is the period to file the petition for review, and can it be extended?",
+            options: [
+                "15 days, with a non-extendible period of another 15 days.",
+                "15 days, which upon motion may be granted an additional period of 15 days, and a further extension of 15 days for compelling reasons.",
+                "30 days, non-extendible.",
+                "15 days, with a possible extension of 30 days for justifiable reasons."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: Under Rule 42, the period is 15 days from notice of the denial of the motion for reconsideration. An extension of 15 days may be granted. A further extension not exceeding 15 days may be granted only for the most compelling reason. (See Remedial Law II, Q&A No. 1c)"
+        },
+        {
+            question: "20. What is the reglementary period to file a Petition for Review on Certiorari to the Supreme Court under Rule 45 after denial of a motion for reconsideration?",
+            options: [
+                "15 days from notice of denial, non-extendible.",
+                "15 days from notice of denial, extendible for a single period of 30 days for justifiable reasons.",
+                "30 days from notice of denial.",
+                "60 days from notice of denial."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: Under Rule 45, the petition must be filed within 15 days from notice of the denial of the motion for reconsideration. The Supreme Court may grant an extension of 30 days only for justifiable reasons. (See Remedial Law II, Q&A No. 1d)"
+        },
+        {
+            question: "21. A taxpayer questions the authority of an LGU to assess real property taxes (RPT). The LGU argues the taxpayer's remedy is an appeal to the Local Board of Assessment Appeals (LBAA). Is the LGU correct?",
+            options: [
+                "Yes, all disputes involving RPT must first be brought to the LBAA.",
+                "Yes, failure to appeal to the LBAA is a violation of the doctrine of exhaustion of administrative remedies.",
+                "No, an appeal to the LBAA is not required when the taxpayer is questioning the very authority and power of the LGU to assess the tax.",
+                "No, the taxpayer should file the case directly with the Court of Tax Appeals."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: When the challenge is not on the reasonableness of the amount of assessment but on the very authority and power of the LGU to impose the tax, the case may be filed directly with a court of competent jurisdiction, bypassing the LBAA. (Ty v. Trampe; See Remedial Law II, Q&A No. 2a)"
+        },
+        {
+            question: "22. If the RTC, in a local tax case, denies an application for a Writ of Preliminary Injunction (WPI), what is the proper remedy for the aggrieved party?",
+            options: [
+                "File a Notice of Appeal to the Court of Appeals.",
+                "File a Petition for Review under Rule 42 with the Court of Appeals.",
+                "File a Petition for Certiorari under Rule 65 with the Court of Tax Appeals.",
+                "File a Petition for Review on Certiorari under Rule 45 with the Supreme Court."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: An order denying a WPI is interlocutory. The remedy from an interlocutory order of the RTC in a local tax case is a petition for certiorari under Rule 65 filed with the Court of Tax Appeals, alleging grave abuse of discretion. (City of Manila v. Grecia-Cuerdo; See Remedial Law II, Q&A No. 2b)"
+        },
+        {
+            question: "23. The MeTC ruled for Marianina in a forcible entry case. Gail appealed to the RTC, which affirmed the MeTC. Gail then filed a Notice of Appeal with the RTC to elevate the case to the Court of Appeals. Is this the correct mode of appeal?",
+            options: [
+                "Yes, a Notice of Appeal is the standard mode of appeal from the RTC.",
+                "Yes, because the RTC decision was a final order.",
+                "No, the correct mode is a Petition for Review under Rule 42 of the Rules of Court.",
+                "No, the correct mode is a Petition for Certiorari under Rule 65."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: When the RTC decides a case in the exercise of its appellate jurisdiction (i.e., an appeal from the MeTC), the proper mode of appeal to the Court of Appeals is not by notice of appeal but by a petition for review under Rule 42. (See Remedial Law II, Q&A No. 3)"
+        },
+        {
+            question: "24. A lawyer filed a Rule 45 petition with the Supreme Court via registered mail but failed to pay the docket fees at the time of filing, intending to pay upon assessment. The petition was dismissed. Was the dismissal correct?",
+            options: [
+                "No, the right to appeal by registered mail would be rendered nugatory if payment cannot be deferred.",
+                "No, the court should have assessed the fees and sent a notice to pay.",
+                "Yes, because the payment of docket fees is mandatory and jurisdictional and must be made at the time of filing the petition.",
+                "Yes, but the dismissal should be without prejudice to re-filing."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: Rule 45 requires that docket and other lawful fees be paid at the time of the filing of the petition. Payment is mandatory and jurisdictional. The option to file by registered mail does not excuse the mandatory simultaneous payment of fees. (See Remedial Law II, Q&A No. 4)"
+        },
+        {
+            question: "25. A party wishes to challenge an arbitral award rendered by the Construction Industry Arbitration Commission (CIAC). What is the primary remedy available?",
+            options: [
+                "A Petition for Review under Rule 43 to the Court of Appeals.",
+                "A Petition for Annulment of Judgment to the Regional Trial Court.",
+                "A Petition for Review on Certiorari under Rule 45 to the Supreme Court on questions of law.",
+                "A special civil action of Certiorari under Rule 65 to the Court of Appeals on any ground."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: E.O. No. 1008 provides that the remedy from a CIAC arbitral award is a direct appeal to the Supreme Court via a petition for review on certiorari under Rule 45, raising only pure questions of law. (See Remedial Law II, Q&A No. 5)"
+        },
+        {
+            question: "26. A party aggrieved by a CIAC arbitral award believes the arbitral tribunal violated the Constitution or acted with grave abuse of discretion on factual matters. What is the available remedy?",
+            options: [
+                "A Petition for Review under Rule 45 to the Supreme Court, raising factual issues.",
+                "A Petition for Certiorari under Rule 65 to the Court of Appeals, on the limited grounds of a challenge to the integrity of the tribunal or violation of the Constitution or law.",
+                "A motion for reconsideration filed with the CIAC itself.",
+                "An action for annulment of award filed with the RTC."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: While the primary remedy is Rule 45 to the SC on questions of law, the Supreme Court has allowed a Rule 65 petition to the Court of Appeals on limited grounds, such as a challenge to the integrity of the arbitral tribunal or that it violated the Constitution or positive law. (Global Medical Center of Laguna, Inc. v. Ross Systems International, Inc.; See Remedial Law II, Q&A No. 5)"
+        },
+        {
+            question: "27. Nysa filed a petition for annulment of judgment under Rule 47 before the CA, alleging that the judgment in the civil suit was obtained because she was defrauded by Jackie. What kind of fraud is required for a Rule 47 petition to prosper?",
+            options: [
+                "Intrinsic fraud, which pertains to the acts of a party during the trial.",
+                "Extrinsic fraud, which prevents a party from having a trial or presenting their case.",
+                "Constructive fraud, which is presumed from the circumstances.",
+                "Any form of fraud that resulted in damages."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: Fraud as a ground for annulment of judgment under Rule 47 must be extrinsic or collateral. The fraud alleged by Nysa (being defrauded by Jackie) was the very issue in the civil case (intrinsic fraud), not fraud that prevented her from participating in the trial. (See Remedial Law II, Q&A No. 6)"
+        },
+        {
+            question: "28. Alex, Bobbie, and Gabbie were convicted of Homicide. Only Bobbie appealed. The CA modified the conviction to Murder for Bobbie, and also for Alex and Gabbie. Was the CA correct in modifying the judgment as to Alex and Gabbie?",
+            options: [
+                "Yes, because they were found to have acted in conspiracy.",
+                "Yes, to maintain consistency in the court's judgment.",
+                "No, because an appeal taken by one accused shall not affect those who did not appeal, unless the judgment is favorable and applicable to them.",
+                "No, because modifying the judgment against non-appealing accused constitutes double jeopardy."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: Sec. 11(a), Rule 122 provides that an appeal by one accused shall not affect non-appealing accused, EXCEPT if the appellate court's judgment is favorable and applicable to them. Here, the modification from Homicide to Murder was prejudicial, not favorable. (See Remedial Law II, Q&A No. 7)"
+        },
+        {
+            question: "29. Mayor Dalupan was convicted by the Sandiganbayan in the exercise of its original jurisdiction. On the 59th day, he filed a Rule 65 petition for certiorari with the Supreme Court. Is this remedy correct?",
+            options: [
+                "Yes, a Rule 65 petition is the proper remedy to question grave abuse of discretion by the Sandiganbayan.",
+                "Yes, because it was filed within the 60-day period.",
+                "No, because the proper remedy from a Sandiganbayan conviction is an appeal to the Supreme Court.",
+                "No, the petition should have been filed with the Court of Appeals."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: A special civil action for certiorari under Rule 65 is not a substitute for a lost appeal. The proper remedy from a judgment of conviction by the Sandiganbayan (in the exercise of its original jurisdiction) is an appeal (e.g., notice of appeal) to the Supreme Court. (See Remedial Law II, Q&A No. 8)"
+        },
+        {
+            question: "30. Police officers were found administratively liable for grave misconduct by the Ombudsman and dismissed from service. What is their proper remedy to assail the Ombudsman's decision?",
+            options: [
+                "A Rule 65 petition for certiorari to the Supreme Court.",
+                "A Rule 45 petition for review on certiorari to the Supreme Court.",
+                "A Rule 43 petition for review to the Court of Appeals.",
+                "A motion for reconsideration to the Office of the President."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: Decisions of the Office of the Ombudsman in administrative cases are appealable to the Court of Appeals via a petition for review under Rule 43. (Fabian v. Desierto; See Remedial Law II, Q&A No. 9)"
+        },
+        {
+            question: "31. The Ombudsman issued a resolution finding probable cause against two police officers for planting evidence. What is the proper remedy to challenge this finding of probable cause?",
+            options: [
+                "A Rule 45 petition for review on certiorari to the Supreme Court.",
+                "A Rule 65 petition for certiorari to the Supreme Court.",
+                "A Rule 43 petition for review to the Court of Appeals.",
+                "A motion to quash filed with the trial court where the information is filed."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: The Supreme Court has consistently held that the remedy to assail the Ombudsman's finding of probable cause in a criminal case is a petition for certiorari under Rule 65 filed with the Supreme Court, alleging grave abuse of discretion. (See Remedial Law II, Q&A No. 9)"
+        },
+        {
+            question: "32. A real action is filed in a court that has no jurisdiction over the area where the property is located. The defendant's motion to dismiss should be based on:",
+            options: [
+                "Improper venue.",
+                "Lack of jurisdiction over the subject matter.",
+                "Both improper venue and lack of jurisdiction.",
+                "Failure to state a cause of action."
+            ],
+            correctAnswer: 0,
+            explanation: "Legal Basis: While jurisdiction over the subject matter is determined by law (e.g., assessed value), venue for real actions is jurisdictional in a sense that a complaint filed in the wrong location is dismissible. The proper ground to raise is improper venue. (Based on Q&A No. 1)"
+        },
+        {
+            question: "33. For substituted service of summons to be valid, what must the sheriff's return contain?",
+            options: [
+                "A simple statement that service was substituted.",
+                "The name of the person who received the summons.",
+                "Details on the impossibility of personal service, the efforts made, and the details of the substituted service.",
+                "A certification from the barangay captain that the defendant resides at the given address."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: For substituted service to be valid, the sheriff's return must detail the facts and circumstances showing the impossibility of personal service within a reasonable time, the efforts exerted to locate the defendant, and the details of the service made. (Based on Q&A No. 2)"
+        },
+        {
+            question: "34. A motion to dismiss is filed on the ground of res judicata. The plaintiff argues that the motion is prohibited. Is the plaintiff correct?",
+            options: [
+                "Yes, all motions to dismiss are prohibited under the new rules.",
+                "No, res judicata is one of the four exceptions to the rule prohibiting motions to dismiss.",
+                "Yes, the ground of res judicata must be raised as an affirmative defense in the Answer.",
+                "No, but only if the prior judgment is already final and executory."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: Sec. 12(a), Rule 15 allows a motion to dismiss on four grounds: (1) lack of jurisdiction over the subject matter, (2) lis pendens, (3) res judicata, and (4) prescription. (Based on Q&A No. 3)"
+        },
+        {
+            question: "35. The doctrine of conclusiveness of judgment, a concept of res judicata, applies when:",
+            options: [
+                "There is identity of parties, subject matter, and causes of action between the first and second cases.",
+                "An issue of fact or law was actually and directly resolved in a former suit between the same parties, even if the cause of action is different.",
+                "A party is barred from litigating a claim that was already decided on the merits.",
+                "The judgment in the first case has not yet become final."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: Conclusiveness of judgment (or issue preclusion) bars the re-litigation of an issue of fact or law that was already judicially determined in a prior case between the same parties, even if the cause of action in the second case is different. (Based on Mallion v. Alcantara, as cited in Q&A No. 5)"
+        },
+        {
+            question: "36. A temporary restraining order (TRO) is issued by a court. What is its maximum effective period if issued by an Executive Judge of a multi-sala court?",
+            options: [
+                "20 days, non-extendible.",
+                "72 hours, after which it automatically expires unless extended.",
+                "60 days, same as a writ of preliminary injunction.",
+                "Until the main case is resolved."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: While not directly in the Q&A, this is a related core concept. A TRO issued by an Executive Judge ex parte has an effective period of 72 hours. This is a common point of confusion with the 20-day TRO issued after a summary hearing. (Related to Rule 58, as discussed in Q&A No. 6)"
+        },
+        {
+            question: "37. An Information for Murder alleges conspiracy. If one accused is acquitted, what is the effect on the other co-accused?",
+            options: [
+                "The other co-accused are automatically acquitted.",
+                "The charge against the others is automatically downgraded to Homicide.",
+                "The acquittal of one does not necessarily mean the acquittal of the others, whose guilt must be proven individually.",
+                "The case against the others must be re-filed."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: In a conspiracy, the act of one is the act of all. However, the acquittal of one conspirator does not automatically result in the acquittal of the others, as the evidence of guilt against each accused is assessed individually. (Related to criminal procedure concepts in Q&A Nos. 10, 11, 28)"
+        },
+        {
+            question: "38. Which of the following is NOT a purpose of a Warrant to Disclose Computer Data (WDCD)?",
+            options: [
+                "To obtain subscriber's information.",
+                "To obtain traffic data.",
+                "To require a service provider to submit relevant data in its possession.",
+                "To intercept and record the content of communications in real-time."
+            ],
+            correctAnswer: 3,
+            explanation: "Legal Basis: A WDCD compels the disclosure of existing computer data (subscriber info, traffic data). Intercepting communications in real-time is the function of a Warrant to Intercept Computer Data (WICD). (See Q&A No. 12)"
+        },
+        {
+            question: "39. The Original Document Rule (formerly Best Evidence Rule) applies only when:",
+            options: [
+                "The evidence presented is a photograph.",
+                "The subject of inquiry is the contents of a document.",
+                "The document is a public record.",
+                "The case is a criminal proceeding."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: The Original Document Rule under Rule 130 is invoked only when the terms or contents of a writing are the subject of inquiry. If the document is used to prove something else (e.g., its existence or execution), the rule does not apply. (Related to Q&A No. 15)"
+        },
+        {
+            question: "40. What is the 'fresh period rule' from the Neypes v. CA case?",
+            options: [
+                "It grants a fresh period of 60 days for Rule 65 petitions.",
+                "It allows a party to file a new complaint after a dismissal without prejudice.",
+                "It grants a new or 'fresh' 15-day period to appeal after the denial of a motion for reconsideration.",
+                "It allows a fresh period to pay docket fees that were not paid on time."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: The Neypes doctrine standardized the appeal periods by granting a fresh period of 15 days (or 30 days for certain cases) from the denial of a motion for new trial or reconsideration, within which to file an appeal. (See Remedial Law II, Q&A No. 1a)"
+        },
+        {
+            question: "41. An appeal from a decision of the Metropolitan Trial Court (MeTC) in an ejectment case is filed with the:",
+            options: [
+                "Court of Appeals directly.",
+                "Regional Trial Court.",
+                "Supreme Court on pure questions of law.",
+                "Local Board of Assessment Appeals."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: Decisions of the MTC are appealable to the Regional Trial Court (RTC) in the exercise of its appellate jurisdiction. This was the procedural path in the case of Gail v. Marianina. (See Remedial Law II, Q&A No. 3)"
+        },
+        {
+            question: "42. A petition for annulment of a final judgment of an RTC under Rule 47 is filed with the:",
+            options: [
+                "Supreme Court.",
+                "Regional Trial Court of another branch.",
+                "Sandiganbayan.",
+                "Court of Appeals."
+            ],
+            correctAnswer: 3,
+            explanation: "Legal Basis: A petition for annulment of judgment of a Regional Trial Court under Rule 47 must be filed with the Court of Appeals. (As seen in the case of Nysa, Remedial Law II, Q&A No. 6)"
+        },
+        {
+            question: "43. If a defendant voluntarily appears in court without a valid service of summons, what is the effect on the court's jurisdiction?",
+            options: [
+                "The court still does not acquire jurisdiction over the person.",
+                "The voluntary appearance is equivalent to service of summons, and the court acquires jurisdiction.",
+                "The case must be dismissed and re-filed.",
+                "The defendant can still raise the defense of improper service at any time."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: A defendant's voluntary appearance in an action shall be equivalent to service of summons. Any objection to the jurisdiction over the person is waived unless raised in a motion to dismiss (if allowed) or as an affirmative defense. (Related to Q&A Nos. 2 & 3)"
+        },
+        {
+            question: "44. A judgment becomes 'conclusive' as to a matter that could have been raised in a prior case under the principle of:",
+            options: [
+                "Law of the case.",
+                "Stare decisis.",
+                "Lis pendens.",
+                "Res judicata by conclusiveness of judgment."
+            ],
+            correctAnswer: 3,
+            explanation: "Legal Basis: Res judicata, specifically under the concept of conclusiveness of judgment, makes a final judgment on the merits conclusive not only as to the matter directly adjudged but also as to any other matter that could have been raised in relation thereto. (See Q&A No. 5)"
+        },
+        {
+            question: "45. An Information is quashed because it fails to allege the specific acts constituting treachery. What is the remedy of the prosecution?",
+            options: [
+                "Appeal the order of quashal immediately.",
+                "The court may order that another Information be filed.",
+                "The case is permanently dismissed.",
+                "File a petition for certiorari under Rule 65."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: If a motion to quash is sustained on a ground that can be cured by amendment (like in this case), the court shall order that an amendment be made. If it cannot be cured, the court shall order another information to be filed. (Rule 117, Sec. 5). (Related to Q&A No. 10)"
+        },
+        {
+            question: "46. What is the key difference between a Warrant to Search, Seize and Examine Computer Data (WSSECD) and a traditional search warrant?",
+            options: [
+                "A WSSECD does not require probable cause.",
+                "A WSSECD allows for the off-site examination of the seized computer data.",
+                "A WSSECD can be issued by any prosecutor.",
+                "There is no substantial difference."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: A unique feature of the WSSECD under the Rule on Cybercrime Warrants is that it allows law enforcement to seize computer devices and conduct a forensic examination off-site to find the specific data described in the warrant. (See Q&A No. 12)"
+        },
+        {
+            question: "47. In a civil case, if a party offers a compromise, it is:",
+            options: [
+                "An implied admission of liability.",
+                "Not an admission of any liability and is not admissible in evidence against the offeror.",
+                "Admissible as evidence but has low probative value.",
+                "A ground to dismiss the case immediately."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: In civil cases, an offer of compromise is not an admission of liability and is not admissible against the offeror. This is to encourage settlements. This is the counterpart to the rule on criminal cases. (Rule 130, Sec. 28). (Contrasted with Q&A No. 13)"
+        },
+        {
+            question: "48. The period to file a petition for certiorari under Rule 64, assailing a decision of the Commission on Audit (COA), after a motion for reconsideration is denied is:",
+            options: [
+                "A fresh period of 30 days from notice of denial.",
+                "Within 60 days from notice of denial.",
+                "Within the remaining period of the original 30 days, which shall not be less than 5 days.",
+                "A fresh period of 15 days from notice of denial."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: Rule 64, in relation to Rule 65, provides a 30-day period from notice of the judgment. If a motion for reconsideration is filed, the petition must be filed within the remaining period, which in no case shall be less than five (5) days. (See Remedial Law II, Q&A No. 1e)"
+        },
+        {
+            question: "49. Which of the following is an interlocutory order?",
+            options: [
+                "An order dismissing a case without prejudice.",
+                "A judgment on the merits after trial.",
+                "An order denying a motion for a writ of preliminary injunction.",
+                "An order granting a motion for execution."
+            ],
+            correctAnswer: 2,
+            explanation: "Legal Basis: An interlocutory order is one that does not finally dispose of a case and does not end the Court's task of adjudicating the parties' contentions and determining their rights. An order denying a WPI is interlocutory because the main case continues. (See Remedial Law II, Q&A No. 2b)"
+        },
+        {
+            question: "50. The failure to pay the correct appellate docket fee is:",
+            options: [
+                "A minor procedural lapse that can be cured by subsequent payment.",
+                "A ground for the appellate court to dismiss the appeal.",
+                "A ground for a motion for reconsideration only.",
+                "Excusable if the party claims they did not want to mail cash."
+            ],
+            correctAnswer: 1,
+            explanation: "Legal Basis: The payment of the full amount of the appellate docket fee is a mandatory and jurisdictional requirement for the perfection of an appeal. Failure to comply is a ground for dismissal. (See Remedial Law II, Q&A No. 4)"
+        }
+    ];
+
+    // --- SCRIPT ---
+    // This section handles the logic for displaying questions, calculating the score, and showing results.
+    document.addEventListener('DOMContentLoaded', function() {
+        const questionsContainer = document.getElementById('questions-container');
+        const mcqForm = document.getElementById('mcq-form');
+        const scoreContainer = document.getElementById('score-container');
+        const scoreElement = document.getElementById('score');
+
+        // Function to render all questions
+        function renderQuestions() {
+            let questionsHTML = '';
+            questions.forEach((q, index) => {
+                questionsHTML += `
+                    <div class="question-container" id="question-${index}">
+                        <p class="font-semibold text-lg mb-4">${q.question}</p>
+                        <div class="options">
+                `;
+                q.options.forEach((option, optionIndex) => {
+                    questionsHTML += `
+                        <div>
+                            <input type="radio" id="q${index}_o${optionIndex}" name="question${index}" value="${optionIndex}">
+                            <label for="q${index}_o${optionIndex}" class="option-label">${String.fromCharCode(65 + optionIndex)}. ${option}</label>
+                        </div>
+                    `;
+                });
+                questionsHTML += `
+                        </div>
+                        <div id="result-container-${index}" class="mt-4"></div>
+                    </div>
+                `;
+            });
+            questionsContainer.innerHTML = questionsHTML;
+        }
+
+        // Function to calculate score and show results
+        mcqForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            let score = 0;
+            
+            questions.forEach((q, index) => {
+                const resultContainer = document.getElementById(`result-container-${index}`);
+                const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                
+                let resultHTML = '';
+                if (selectedOption) {
+                    const userAnswer = parseInt(selectedOption.value);
+                    if (userAnswer === q.correctAnswer) {
+                        score++;
+                        resultHTML += `<span class="result-indicator correct">Correct</span>`;
+                    } else {
+                        resultHTML += `<span class="result-indicator incorrect">Incorrect</span>`;
+                    }
+                } else {
+                    resultHTML += `<span class="result-indicator incorrect">Not Answered</span>`;
+                }
+
+                // Show explanation regardless of answer
+                resultHTML += `<div class="explanation mt-2">${q.explanation}</div>`;
+                resultContainer.innerHTML = resultHTML;
+            });
+
+            // Display final score
+            scoreElement.textContent = `Your Score: ${score} out of ${questions.length}`;
+            scoreContainer.classList.remove('hidden');
+            
+            // Scroll to the top to show the first question's result
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Initial render of questions on page load
+        renderQuestions();
+    });
+
+    </script>
+</body>
+</html>
