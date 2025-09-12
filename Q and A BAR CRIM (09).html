@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2009 Criminal Law Bar Exam MCQs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .explanation {
+            display: none;
+            transition: all 0.3s ease-in-out;
+        }
+        .correct {
+            color: #16a34a; /* green-600 */
+        }
+        .incorrect {
+            color: #dc2626; /* red-600 */
+        }
+        .result-text {
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">Criminal Law MCQ Challenge</h1>
+            <p class="text-md sm:text-lg text-gray-600 mt-2">Based on the 2009 Philippine Bar Examination</p>
+        </header>
+
+        <div id="quiz-container" class="space-y-6">
+            <!-- Questions will be injected here by JavaScript -->
+        </div>
+
+        <div class="mt-8 text-center">
+            <button id="submit-btn" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition-transform transform hover:scale-105">
+                Submit Answers
+            </button>
+        </div>
+
+        <div id="results-container" class="mt-8 text-center bg-white p-6 rounded-lg shadow-lg" style="display: none;">
+            <h2 class="text-2xl font-bold text-gray-900">Your Score</h2>
+            <p id="score" class="text-4xl font-bold text-blue-600 mt-2"></p>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            // PART I BASED QUESTIONS
+            {
+                question: "Amado, convicted of Rape and later granted an absolute pardon, is subsequently convicted of Homicide. Under the Revised Penal Code, Amado is considered a:",
+                options: {
+                    a: "Habitual delinquent, because he has a subsequent conviction.",
+                    b: "Recidivist, because both crimes are embraced under the same title of the RPC and the pardon does not erase the conviction.",
+                    c: "Quasi-recidivist, because he committed another crime after his first conviction.",
+                    d: "Not a recidivist, because the absolute pardon erased all effects of his prior conviction."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: An absolute pardon only erases the service of the sentence, not the fact of the conviction. Since Rape and Homicide are both under Title 8 (Crimes Against Persons) of the RPC, the subsequent conviction makes him a recidivist."
+            },
+            {
+                question: "What is the primary legal effect of an absolute pardon on a convict's criminal record for purposes of determining recidivism?",
+                options: {
+                    a: "It completely obliterates the crime and its effects, as if no crime was committed.",
+                    b: "It only extinguishes the criminal liability but not the fact of conviction.",
+                    c: "It restores the convict's civil and political rights, thereby nullifying the prior conviction.",
+                    d: "It serves as a mitigating circumstance in case of a subsequent offense."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: Jurisprudence holds that an absolute pardon does not erase the conviction itself. The conviction remains a part of the person's record and can be considered for determining recidivism if the subsequent crime falls under the same title of the RPC."
+            },
+            {
+                question: "A creditor forces a child to work for him to pay off the debt of the child's father. What crime is committed?",
+                options: {
+                    a: "Slavery under the RPC.",
+                    b: "Violation of the Anti-Trafficking of Persons Act (R.A. 9208).",
+                    c: "Child abuse under R.A. 7610.",
+                    d: "Grave Coercion."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: The act constitutes trafficking as defined in R.A. 9208. The purpose is exploitation through forced labor or services, which is explicitly covered by this special law, not slavery under the RPC."
+            },
+            {
+                question: "The use of an unlicensed firearm in the commission of Homicide is considered a:",
+                options: {
+                    a: "Generic aggravating circumstance that can be offset.",
+                    b: "Qualifying circumstance, elevating the crime to Murder.",
+                    c: "Special aggravating circumstance where the penalty is imposed in its maximum period.",
+                    d: "Separate crime of Illegal Possession of Firearms."
+                },
+                answer: "c",
+                explanation: "LEGAL BASIS: When an unlicensed firearm is used in crimes like Homicide or Murder, it is treated as a special aggravating circumstance, which mandates the imposition of the penalty in its maximum period and cannot be offset by mitigating circumstances."
+            },
+            {
+                question: "During a robbery, a bystander is accidentally killed by one of the robbers. The robber is liable for:",
+                options: {
+                    a: "Two separate crimes: Robbery and Reckless Imprudence Resulting in Homicide.",
+                    b: "Two separate crimes: Robbery and Homicide.",
+                    c: "The special complex crime of Robbery with Homicide.",
+                    d: "The crime of Robbery, with the death being a generic aggravating circumstance."
+                },
+                answer: "c",
+                explanation: "LEGAL BASIS: The law provides for the special complex crime of Robbery with Homicide. As long as a killing occurs by reason or on the occasion of the robbery, this single, indivisible crime is committed, regardless of who was killed or whether the killing was intentional or accidental."
+            },
+            {
+                question: "A policeman, not authorized by a judicial order, enters a private house against the owner's will. What crime is committed?",
+                options: {
+                    a: "Trespass to Dwelling.",
+                    b: "Violation of Domicile.",
+                    c: "Grave Coercion.",
+                    d: "Abuse in the exercise of public functions."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: Article 128 of the RPC defines Violation of Domicile. Trespass to Dwelling (Art. 280) is committed by a private person, whereas Violation of Domicile is committed by a public officer or employee."
+            },
+            {
+                question: "Antero, convicted of Rebellion, escapes from jail. He is later granted amnesty for the crime of Rebellion. What is the effect of the amnesty on his conviction for Evasion of Service of Sentence?",
+                options: {
+                    a: "The conviction for Evasion stands because it is a separate crime from Rebellion.",
+                    b: "The conviction for Evasion is extinguished because the amnesty obliterated the crime of Rebellion, which was the basis for the sentence being served.",
+                    c: "The conviction for Evasion is reduced to a lesser penalty.",
+                    d: "The amnesty has no effect, but Antero can apply for a separate pardon for the Evasion charge."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: Amnesty completely obliterates the offense and all its legal effects. Since the sentence being evaded stemmed from the crime of Rebellion, which has been erased by amnesty, the legal basis for the Evasion of Service of Sentence conviction disappears."
+            },
+            {
+                question: "Rigoberto hits Judge Lorenzo on the back with a piece of wood. The attack was motivated by a grudge because the Judge had cited Rigoberto for contempt two years earlier. Rigoberto is guilty of:",
+                options: {
+                    a: "Direct Assault.",
+                    b: "Less Serious Physical Injuries only.",
+                    c: "Indirect Assault.",
+                    d: "Attempted Homicide."
+                },
+                answer: "a",
+                explanation: "LEGAL BASIS: Article 148 of the RPC defines Direct Assault. The crime is committed not only when a person in authority is attacked while engaged in official duties, but also when the attack is by reason of the past performance of such duties."
+            },
+            {
+                question: "Charlie, intending to poison Brad, obtains a substance from a veterinarian which he mixes into Brad's food. The substance turns out to be a harmless, non-toxic powder. What crime did Charlie commit?",
+                options: {
+                    a: "No crime, because the means used were ineffectual.",
+                    b: "Attempted Murder.",
+                    c: "Frustrated Murder.",
+                    d: "Impossible Crime of Murder."
+                },
+                answer: "d",
+                explanation: "LEGAL BASIS: Article 4, par. 2 of the RPC. The act would have been a crime against persons (Murder) but was not accomplished due to the employment of ineffectual means, which is a classic case of an impossible crime."
+            },
+            {
+                question: "Following the previous scenario, what if the harmless powder caused Brad to have a severe allergic reaction, requiring 10 days of hospitalization? What is Charlie's liability?",
+                options: {
+                    a: "Still an Impossible Crime of Murder.",
+                    b: "Less Serious Physical Injuries.",
+                    c: "Serious Physical Injuries.",
+                    d: "Attempted Murder through reckless imprudence."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: When the act performed, intended as an impossible crime, results in another offense punishable under the RPC, the offender is liable for that other offense. Hospitalization of 10 days falls under Less Serious Physical Injuries."
+            },
+            {
+                question: "Ruben lends Ponciano his gun, knowing Ponciano intends to kill Freddie with it. Ponciano later kills Freddie but uses a knife instead. What is Ruben's criminal liability?",
+                options: {
+                    a: "Principal by inducement for Murder.",
+                    b: "Accomplice to Murder.",
+                    c: "Accessory to Murder.",
+                    d: "No criminal liability."
+                },
+                answer: "d",
+                explanation: "LEGAL BASIS: Ruben's act of lending the gun is in the preparatory stage. There is no conspiracy as there was no agreement on the commission of the crime, and he did not directly participate. Mere knowledge without participation does not create criminal liability."
+            },
+            {
+                question: "Baldo secretly killed Conrad in 1960. A witness, Dominador, only reported the crime to the police in 1970 due to fear. Baldo was arrested in 1980. When did the 20-year prescriptive period for Murder begin to run?",
+                options: {
+                    a: "In 1960, the day the crime was committed.",
+                    b: "In 1980, the day the perpetrator was arrested.",
+                    c: "In 1970, the day the crime was discovered by the authorities.",
+                    d: "The crime of Murder does not prescribe."
+                },
+                answer: "c",
+                explanation: "LEGAL BASIS: Article 91 of the RPC states that for crimes not known at the time of commission, the prescriptive period commences from the day of discovery by the offended party, the authorities, or their agents."
+            },
+            {
+                question: "Charina, a Clerk of Court, accepted P20,000 to convince a judge to rule in a plaintiff's favor. She was charged under R.A. 3019 and later, for Indirect Bribery under the RPC. Charina claims double jeopardy. Is her claim correct?",
+                options: {
+                    a: "Yes, because both charges arise from the same act.",
+                    b: "No, because the elements of the violation of R.A. 3019 and Indirect Bribery under the RPC are different.",
+                    c: "Yes, because R.A. 3019 is the more specific law and should prevail.",
+                    d: "No, because double jeopardy only applies if the first case was already resolved."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: For double jeopardy to apply, the elements of both offenses must be the same. The elements for violating Sec. 3(b) of R.A. 3019 are distinct from the elements of Indirect Bribery under Art. 211 of the RPC, thus allowing for separate prosecutions."
+            },
+            {
+                question: "During a bank robbery, a policeman responding to the scene is killed in a shootout with the robbers. The robbers are liable for:",
+                options: {
+                    a: "Robbery and a separate crime of Homicide.",
+                    b: "Robbery and Direct Assault with Homicide.",
+                    c: "The special complex crime of Robbery with Homicide.",
+                    d: "Robbery, with the policeman's death considered as a quasi-recidivism."
+                },
+                answer: "c",
+                explanation: "LEGAL BASIS: The special complex crime of Robbery with Homicide is committed whenever a killing results by reason or on the occasion of the robbery. This applies regardless of who is killed, including responding authorities."
+            },
+            {
+                question: "Virgilio stops a van, orders the driver out, and tells him to inform the parents of the 6-year-old child inside that a ransom of P10-million is needed, otherwise the child would be beheaded. He keeps the child and the nanny. What crime did Virgilio commit?",
+                options: {
+                    a: "Grave Coercion and Grave Threats.",
+                    b: "Kidnapping for Ransom.",
+                    c: "Serious Illegal Detention.",
+                    d: "Robbery with Intimidation."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: Article 267 of the RPC defines Kidnapping. The act of detaining a person for the purpose of extorting ransom from the victim or any other person constitutes the qualifying circumstance for Kidnapping for Ransom, which carries the highest penalty."
+            },
+            {
+                question: "To help his brother Willy (a detention prisoner) escape, Chito bribes a Clerk of Court to forge a judge's signature on a release order. What is Chito's liability as a private individual?",
+                options: {
+                    a: "Delivery of Prisoners from Jail, Corruption of Public Officials, and Falsification of Public Document as principal by inducement.",
+                    b: "Only for Corruption of Public Officials, as the other acts were done by the Clerk.",
+                    c: "Only as an accomplice to Evasion of Service of Sentence.",
+                    d: "No liability, as a private person cannot commit Falsification of a Public Document."
+                },
+                answer: "a",
+                explanation: "LEGAL BASIS: Chito is liable as a principal by inducement for the Falsification (Art. 172), for Corruption of Public Officials for the bribe (Art. 212), and for Delivery of Prisoners from Jail for aiding the escape (Art. 156)."
+            },
+            {
+                question: "Vincent, a convict serving a final sentence, escapes with the help of Chito's scheme. What crime did Vincent commit?",
+                options: {
+                    a: "Delivery of Prisoners from Jail.",
+                    b: "Evasion of Service of Sentence.",
+                    c: "No crime, as he was merely the beneficiary of the escape plan.",
+                    d: "Qualified Theft of his freedom."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: Article 157 of the RPC defines Evasion of Service of Sentence, which is committed by a convict who evades service of his sentence by escaping during the term of his imprisonment."
+            },
+            // PART II BASED QUESTIONS
+            {
+                question: "Which statement accurately compares Life Imprisonment and Reclusion Perpetua?",
+                options: {
+                    a: "They are identical penalties with different names.",
+                    b: "Life Imprisonment is more favorable because it allows for parole.",
+                    c: "Reclusion Perpetua is more favorable because it has a fixed duration of 20 years and 1 day to 40 years, while Life Imprisonment does not.",
+                    d: "Reclusion Perpetua is imposed for crimes under special laws, while Life Imprisonment is for crimes under the RPC."
+                },
+                answer: "c",
+                explanation: "LEGAL BASIS: Reclusion Perpetua, a penalty under the RPC, has a defined range and is subject to the rules on modifying circumstances. Life Imprisonment, typically imposed by special laws, does not have a fixed duration and is not subject to the same rules, making it less favorable."
+            },
+            {
+                question: "Is voluntary surrender a mitigating circumstance in all crimes under the Revised Penal Code?",
+                options: {
+                    a: "Yes, it is a universal mitigating circumstance.",
+                    b: "No, it does not apply to crimes committed through culpa (negligence).",
+                    c: "Yes, unless the offender is a recidivist.",
+                    d: "No, it only applies to crimes against persons."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: Under Article 365 (Criminal Negligence), the court has discretion in imposing penalties and is not bound by the rules in Article 64 regarding mitigating circumstances. Therefore, voluntary surrender may be disregarded in such cases."
+            },
+            {
+                question: "In a prosecution for fencing under P.D. 1612, the accused proves he had no knowledge that the goods were stolen. Is this a complete defense?",
+                options: {
+                    a: "Yes, because intent is a key element of fencing.",
+                    b: "No, because fencing is a mala prohibitum offense, and good faith is not a defense.",
+                    c: "Yes, but only if he can present a valid receipt for the goods.",
+                    d: "No, because mere possession of stolen goods is conclusive proof of fencing."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: P.D. 1612, the Anti-Fencing Law, punishes an act that is not inherently evil but is prohibited by law for public policy reasons (mala prohibitum). In such crimes, the only inquiry is whether the law has been violated, and criminal intent or good faith is irrelevant."
+            },
+            {
+                question: "In the crime of libel, when is truth considered a defense?",
+                options: {
+                    a: "Truth is always an absolute defense in libel.",
+                    b: "Truth is a defense only if the libelous matter concerns a private individual.",
+                    c: "Truth is a defense if the matter is true and was published with good motives and for justifiable ends.",
+                    d: "Truth is never a defense in libel."
+                },
+                answer: "c",
+                explanation: "LEGAL BASIS: Article 361 of the RPC explicitly states the two requirements for truth to be a valid defense in a libel prosecution: the matter must be true, AND it must have been published with good motives and for justifiable ends."
+            },
+            {
+                question: "For a person to be liable under the Anti-Money Laundering Act (R.A. 9160), must the prosecution prove that the accused knew the identities of the culprits who committed the predicate crime?",
+                options: {
+                    a: "Yes, knowledge of the identities of the original culprits is an essential element.",
+                    b: "No, it is sufficient that the accused knew the proceeds were from an unlawful activity.",
+                    c: "Yes, but only if the predicate crime is drug trafficking.",
+                    d: "No, knowledge is not required as it is a strict liability offense."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: R.A. 9160 requires proof that the offender knew the monetary instrument or property represents, involves, or relates to the proceeds of an unlawful activity. It does not require knowledge of the specific identities of the persons who committed the predicate offense."
+            },
+            {
+                question: "A person convicted of Homicide (punishable by reclusion temporal) has two mitigating circumstances and one aggravating circumstance. What is the correct maximum term of the indeterminate sentence?",
+                options: {
+                    a: "Reclusion temporal in its medium period.",
+                    b: "Reclusion temporal in its maximum period.",
+                    c: "Reclusion temporal in its minimum period.",
+                    d: "Prision mayor in its maximum period."
+                },
+                answer: "c",
+                explanation: "LEGAL BASIS: According to Art. 64 of the RPC, with two mitigating and one aggravating circumstance, there is a net of one mitigating circumstance. This requires imposing the penalty (reclusion temporal) in its minimum period for the maximum term of the ISL."
+            },
+            {
+                question: "Would the rules for determining the penalty be the same if the conviction was for a violation of R.A. 9165 (Dangerous Drugs Act), which is a special law?",
+                options: {
+                    a: "Yes, the rules on mitigating and aggravating circumstances in the RPC apply to all laws.",
+                    b: "No, because special laws do not follow the technical nomenclature of penalties in the RPC and modifying circumstances are generally not applied.",
+                    c: "Yes, but only if the penalty is divisible.",
+                    d: "No, because R.A. 9165 has its own specific rules for appreciating modifying circumstances."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: Violations of special laws are generally mala prohibita. The rules on modifying circumstances and the division of penalties into periods under the RPC do not apply, unless the special law specifically provides for their application."
+            },
+            {
+                question: "Which of the following best describes a 'delito continuado' or continued crime?",
+                options: {
+                    a: "A series of different crimes committed by the same person on the same day.",
+                    b: "A single criminal act that produces multiple grave or less grave felonies.",
+                    c: "A series of acts done in pursuance of a single criminal impulse, violating the same penal provision.",
+                    d: "A crime committed by a person who is currently serving a sentence for a prior conviction."
+                },
+                answer: "c",
+                explanation: "LEGAL BASIS: A 'delito continuado' exists when there is a plurality of acts but only a single criminal resolution. The key elements are a single criminal impulse and the violation of the same penal provision."
+            },
+            {
+                question: "Angelo's Ponzi scheme defrauded 500 different individuals by issuing them bouncing post-dated checks. Is his contention that he only committed one count of estafa under the principle of 'delito continuado' correct?",
+                options: {
+                    a: "Yes, because all the acts were part of a single scheme or criminal impulse.",
+                    b: "No, because each act of defraudation against a different person constitutes a separate crime of estafa.",
+                    c: "Yes, because all the checks were issued for the same fraudulent purpose.",
+                    d: "No, but he should be charged with a complex crime, not separate counts."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: When different persons are offended by a series of acts, each act constitutes a separate offense. The concept of 'delito continuado' does not apply when the criminal acts affect distinct individuals, as each transaction gives rise to a separate crime."
+            },
+            {
+                question: "What is the 'chain of custody' requirement in drug offenses under R.A. 9165?",
+                options: {
+                    a: "The requirement that only one officer handles the drug evidence from seizure to presentation in court.",
+                    b: "The duly recorded authorized movement of dangerous drugs from seizure, to the lab, to safekeeping, and to court presentation.",
+                    c: "The process of tracking the money used in a buy-bust operation.",
+                    d: "The documentation proving the identity of the confidential informant."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: Section 21 of R.A. 9165 establishes the chain of custody rule to ensure the integrity and evidentiary value of the seized drugs are preserved. It tracks the movement and handling of the evidence through its various stages."
+            },
+            {
+                question: "What is the effect of the failure of police officers to strictly observe the chain of custody requirement in a drug case?",
+                options: {
+                    a: "It automatically results in the acquittal of the accused.",
+                    b: "It renders the seized drugs inadmissible in evidence.",
+                    c: "It does not automatically lead to acquittal if there is justifiable reason for non-compliance and the integrity of the drugs was preserved.",
+                    d: "It leads to administrative liability for the officers but does not affect the criminal case."
+                },
+                answer: "c",
+                explanation: "LEGAL BASIS: The Implementing Rules and Regulations of R.A. 9165 provide a saving clause. Non-compliance is not fatal as long as the prosecution can prove a justifiable ground for it and show that the integrity and evidentiary value of the seized items were properly preserved."
+            },
+            {
+                question: "Joe was 17 when he committed Homicide in 2005. He was charged in 2007 after R.A. 9344 (Juvenile Justice Act) was in effect. Is he entitled to diversion?",
+                options: {
+                    a: "No, because he was already over 18 when he was charged.",
+                    b: "No, because R.A. 9344 cannot be applied retroactively.",
+                    c: "Yes, because the law in effect at the time of the charge governs the proceedings.",
+                    d: "Yes, because R.A. 9344 is applied retroactively as it is favorable to the accused, and what matters is his age at the time of the commission of the crime."
+                },
+                answer: "d",
+                explanation: "LEGAL BASIS: Penal laws shall have a retroactive effect insofar as they favor the person guilty of a felony (Art. 22, RPC). R.A. 9344 is a favorable penal law. The eligibility for its benefits is determined by the offender's age at the time of the commission of the offense."
+            },
+            {
+                question: "If a child in conflict with the law (CICL) is convicted but reaches the age of 18 while under a suspended sentence, what can the court do?",
+                options: {
+                    a: "Automatically discharge the child.",
+                    b: "Automatically order the execution of the sentence.",
+                    c: "Determine whether to discharge, order execution, or extend the suspended sentence up to age 21.",
+                    d: "Refer the case back for a new trial as an adult."
+                },
+                answer: "c",
+                explanation: "LEGAL BASIS: Section 40 of R.A. 9344 explicitly gives the court these three options upon the child reaching the age of majority while the sentence is suspended, allowing for a determination based on the child's rehabilitation."
+            },
+            {
+                question: "Can a minor convicted of Attempted Murder, where the consummated crime is punishable by death (now reclusion perpetua), be eligible for probation?",
+                options: {
+                    a: "No, because the penalty for the consummated felony disqualifies him.",
+                    b: "No, because probation is never available for crimes against persons.",
+                    c: "Yes, if after lowering the penalty by two degrees for the attempted stage and applying the privileged mitigating circumstance of minority, the resulting maximum penalty is not more than 6 years.",
+                    d: "Yes, all minors are automatically eligible for probation regardless of the crime."
+                },
+                answer: "c",
+                explanation: "LEGAL BASIS: Eligibility for probation under P.D. 968 depends on the maximum penalty actually imposed. After applying the rules on stages of execution (Art. 51, RPC) and privileged mitigating circumstances (Art. 68, RPC), if the resulting penalty qualifies, probation is possible."
+            },
+            {
+                question: "Mayor Roger and Treasurer Jessie falsified documents to make it appear that non-existent individuals received financial assistance, and they pocketed the P2-million public funds. They were charged with Malversation through Falsification and a violation of R.A. 3019. Is the charge of malversation through falsification as a complex crime correct?",
+                options: {
+                    a: "Yes, because the falsification was a necessary means to commit malversation.",
+                    b: "No, if the falsification was done to conceal the malversation, they are separate crimes.",
+                    c: "Yes, because whenever falsification and malversation are committed together, it is always a complex crime.",
+                    d: "No, because as public officials, they can only be charged with Plunder."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: The complex crime of malversation through falsification exists only when the falsification is a necessary means to commit malversation. If the falsification is committed to hide or cover up an already consummated malversation, the two are treated as separate and distinct offenses."
+            },
+            {
+                question: "Wenceslao enters Loretta's room using a picklock, rapes her, stabs her to death, and then takes her jewelry. What crime or crimes did Wenceslao commit?",
+                options: {
+                    a: "Separate crimes of Robbery, Rape, and Homicide.",
+                    b: "Robbery with Homicide, with Rape as an aggravating circumstance.",
+                    c: "Rape with Homicide and a separate crime of Theft.",
+                    d: "A complex crime of Rape with Homicide and Robbery."
+                },
+                answer: "c",
+                explanation: "LEGAL BASIS: When homicide is committed by reason or on the occasion of rape, the special complex crime of Rape with Homicide is committed. The taking of the jewelry constitutes Theft, not Robbery, because the force used was in the context of the rape/homicide, not for the purpose of taking the items."
+            },
+            {
+                question: "In the preceding case, which of the following is an aggravating circumstance?",
+                options: {
+                    a: "Use of a picklock.",
+                    b: "Dwelling.",
+                    c: "Both use of a picklock and dwelling.",
+                    d: "Neither use of a picklock nor dwelling."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: Dwelling (Art. 14, par. 3) is aggravating because the crime was committed in the victim's own room. Use of a picklock is not a generic aggravating circumstance under Art. 14; it is a specific element in some types of Robbery (Art. 299)."
+            },
+            {
+                question: "If Loretta survived the stabbing in the previous scenario, what would be the liability of Wenceslao?",
+                options: {
+                    a: "Frustrated Rape with Homicide.",
+                    b: "Separate crimes of Rape and Frustrated Homicide.",
+                    c: "A complex crime of Rape and Attempted Homicide.",
+                    d: "Rape with the aggravating circumstance of use of a deadly weapon."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: The special complex crime of Rape with Homicide only exists if the victim dies. If the victim survives the attack, the offender is liable for the separate crimes committed, in this case, consummated Rape and Frustrated Homicide."
+            },
+            {
+                question: "While dancing intimately, Leoncio rubs his private parts on Evelyn's buttocks. Evelyn protests, but he continues. What crime did Leoncio commit?",
+                options: {
+                    a: "Acts of Lasciviousness.",
+                    b: "Unjust Vexation.",
+                    c: "Attempted Rape.",
+                    d: "Slight Physical Injuries."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: The act, while annoying and irritating, does not conclusively show lewd design to be considered Acts of Lasciviousness. In the absence of clear lewd intent, the act falls under the lesser crime of Unjust Vexation."
+            },
+            {
+                question: "If, after the music stopped, Leoncio continued rubbing his private parts on Evelyn's buttocks, what crime did he commit?",
+                options: {
+                    a: "Still Unjust Vexation.",
+                    b: "Acts of Lasciviousness.",
+                    c: "Grave Scandal.",
+                    d: "Attempted Rape."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: Continuing the act after the context of dancing has ended more clearly demonstrates the presence of lewd design, which is the key element that elevates the offense from Unjust Vexation to Acts of Lasciviousness."
+            },
+            {
+                question: "Delmo, intending to kill his enemy Oscar in the ICU, disconnects the life-saving tubes from a patient he believes to be Oscar. The patient, who is actually Larry, survives due to a doctor's timely intervention. What is the proper charge against Delmo?",
+                options: {
+                    a: "Frustrated Murder against Larry.",
+                    b: "Attempted Murder against Oscar.",
+                    c: "Impossible Crime of Murder.",
+                    d: "Frustrated Homicide against Larry."
+                },
+                answer: "a",
+                explanation: "LEGAL BASIS: This is a case of error in personae (mistake in identity). Delmo is liable for the consequences of his act against the actual victim, Larry. The crime is frustrated because Delmo performed all acts of execution, but the felony was not produced due to a cause independent of his will (the doctor's intervention)."
+            },
+            {
+                question: "In the case of Delmo, can the aggravating circumstance of evident premeditation be appreciated against him?",
+                options: {
+                    a: "Yes, because he planned the killing.",
+                    b: "No, because the premeditation was directed at Oscar, not Larry.",
+                    c: "Yes, because the plan to kill was transferred to the actual victim.",
+                    d: "No, because the crime was not consummated."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: For evident premeditation to be appreciated, the offender must have planned to kill the specific person who became the victim. Since Delmo's plan was to kill Oscar, the premeditation cannot be appreciated in the crime committed against Larry."
+            },
+            {
+                question: "Which of the following scenarios constitutes the crime of Robbery by a band?",
+                options: {
+                    a: "Four malefactors, only one of whom is armed, commit robbery.",
+                    b: "Three armed malefactors commit robbery.",
+                    c: "More than three armed malefactors take part in the commission of the robbery.",
+                    d: "Five malefactors, all unarmed, commit robbery."
+                },
+                answer: "c",
+                explanation: "LEGAL BASIS: Article 296 of the RPC defines robbery by a band. The requirement is that there must be more than three armed malefactors who acted together in the commission of the offense."
+            },
+            {
+                question: "In a tumultuous affray, where several persons assault each other in a confused manner resulting in a death, who is liable for the death if the actual killer cannot be identified?",
+                options: {
+                    a: "All participants are liable as principals for Homicide.",
+                    b: "Only those who inflicted serious physical injuries are liable.",
+                    c: "No one is liable if the killer cannot be identified.",
+                    d: "All those who took part in the affray shall be held liable for Death Caused in a Tumultuous Affray."
+                },
+                answer: "d",
+                explanation: "LEGAL BASIS: Article 251 of the RPC provides for the crime of Death Caused in a Tumultuous Affray. This specific crime applies when the actual killer cannot be ascertained, and it imposes a penalty on all who participated in the affray."
+            },
+            {
+                question: "This crime is committed by a public officer entrusted with law enforcement who refrains from arresting or prosecuting an offender who has committed a crime punishable by reclusion perpetua in consideration of a gift or promise.",
+                options: {
+                    a: "Direct Bribery.",
+                    b: "Indirect Bribery.",
+                    c: "Qualified Bribery.",
+                    d: "Corruption of Public Officials."
+                },
+                answer: "c",
+                explanation: "LEGAL BASIS: Article 211-A of the RPC defines Qualified Bribery. The qualifying elements are that the public officer is entrusted with law enforcement and the crime of the unprosecuted offender is punishable by reclusion perpetua or death."
+            },
+            {
+                question: "Which public officer can be held liable for Qualified Bribery?",
+                options: {
+                    a: "A judge who refrains from convicting a drug lord.",
+                    b: "A police officer who refrains from arresting a murderer.",
+                    c: "A BIR examiner who refrains from filing a tax evasion case.",
+                    d: "Any public officer who accepts a bribe."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: The crime of Qualified Bribery specifically applies to public officers entrusted with law enforcement, such as police officers and prosecutors. A judge's function is adjudication, not law enforcement in this context."
+            },
+            {
+                question: "Leilanie's husband had sexual intercourse with another woman in a hotel room. Can Leilanie's husband be charged with Concubinage?",
+                options: {
+                    a: "Yes, because he had sexual intercourse with a woman who is not his wife.",
+                    b: "No, because Concubinage requires either keeping a mistress in the conjugal dwelling, cohabiting with her elsewhere, or having sexual intercourse under scandalous circumstances.",
+                    c: "Yes, because any act of marital infidelity by the husband is concubinage.",
+                    d: "No, because the act was done in a private hotel room."
+                },
+                answer: "b",
+                explanation: "LEGAL BASIS: Article 334 of the RPC lays down the specific modes of committing Concubinage. A single act of sexual intercourse outside the conjugal dwelling is not concubinage unless it is done under scandalous circumstances, which is not indicated by the facts."
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const submitBtn = document.getElementById('submit-btn');
+        const resultsContainer = document.getElementById('results-container');
+        const scoreElement = document.getElementById('score');
+
+        function buildQuiz() {
+            const output = [];
+            quizData.forEach((currentQuestion, questionNumber) => {
+                const answers = [];
+                for (letter in currentQuestion.options) {
+                    answers.push(
+                        `<label class="block p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors cursor-pointer">
+                            <input type="radio" name="question${questionNumber}" value="${letter}" class="mr-3 text-blue-600 focus:ring-blue-500">
+                            <span class="font-medium">${letter.toUpperCase()}.</span> ${currentQuestion.options[letter]}
+                        </label>`
+                    );
+                }
+
+                output.push(
+                    `<div class="question-block bg-white p-6 rounded-lg shadow-md">
+                        <div class="font-semibold text-lg mb-4">${questionNumber + 1}. ${currentQuestion.question}</div>
+                        <div class="answers space-y-3">${answers.join('')}</div>
+                        <div id="result${questionNumber}" class="result-text mt-3"></div>
+                        <div id="explanation${questionNumber}" class="explanation mt-2 p-3 bg-blue-50 border border-blue-200 text-blue-800 rounded-md text-left">
+                           <strong>Legal Basis:</strong> ${currentQuestion.explanation}
+                        </div>
+                    </div>`
+                );
+            });
+            quizContainer.innerHTML = output.join('');
+        }
+
+        function showResults() {
+            let numCorrect = 0;
+            quizData.forEach((currentQuestion, questionNumber) => {
+                const answerContainer = quizContainer.querySelector(`#result${questionNumber}`);
+                const explanationContainer = quizContainer.querySelector(`#explanation${questionNumber}`);
+                const selector = `input[name=question${questionNumber}]:checked`;
+                const userAnswer = (document.querySelector(selector) || {}).value;
+
+                if (userAnswer === currentQuestion.answer) {
+                    numCorrect++;
+                    answerContainer.textContent = 'Correct';
+                    answerContainer.className = 'result-text correct';
+                } else {
+                    answerContainer.textContent = 'Incorrect';
+                    answerContainer.className = 'result-text incorrect';
+                }
+                explanationContainer.style.display = 'block';
+            });
+
+            scoreElement.textContent = `${numCorrect} out of ${quizData.length}`;
+            resultsContainer.style.display = 'block';
+            submitBtn.style.display = 'none'; // Hide submit button after submission
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+        buildQuiz();
+        submitBtn.addEventListener('click', showResults);
+    </script>
+
+</body>
+</html>
